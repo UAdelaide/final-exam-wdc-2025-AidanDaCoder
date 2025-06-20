@@ -148,18 +148,16 @@
 
             if (!dbDogs || dbDogs.length === 0) {
               dogsWithPictures.value = [];
-              isLoadingDogs.value = false;
               return;
             }
 
             const dogsWithImagesPromises = dbDogs.map(async (dbDog) => {
               const imageUrl = await fetchRandomDogImage();
-              return { // Ensure all required fields for the table are here
-                dog_id: dbDog.dog_id, // From your API
+              return {
+                dog_id: dbDog.dog_id,
                 dog_name: dbDog.dog_name,
                 size: dbDog.size,
-                owner_id: dbDog.owner_id, // From your API
-                // owner_username: dbDog.owner_username, // Keep if needed elsewhere, not in this table
+                owner_id: dbDog.owner_id,
                 imageUrl: imageUrl
               };
             });
