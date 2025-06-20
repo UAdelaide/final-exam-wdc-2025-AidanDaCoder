@@ -216,8 +216,8 @@ initialiseDatabaseAndPool().then(() => {
         console.log(`Server running on http://localhost:${PORT}`);
     });
 }).catch((err) => {
-    console.error("Failed to start server', err);
-    process.exit(1); // Exit if server can't start due to DB init failure
+    console.error('Failed to start server', err);
+    process.exit(1);
 });
 
 const walkRoutes = require('./routes/walkRoutes');
