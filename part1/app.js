@@ -122,7 +122,7 @@ async function startServer() {
             console.log(`  GET http://localhost:${PORT}/api/walkers/summary`);
         });
     } catch (error) {
-        console.error("Could not start server:", error);
+        console.error("could not start server:", error);
         process.exit(1);
     }
 }
