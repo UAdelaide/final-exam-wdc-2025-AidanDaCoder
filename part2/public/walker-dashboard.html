@@ -105,7 +105,8 @@
           message.value = '';
           error.value = '';
 
-          
+          applying[requestId] = true; // set applying state for this button
+
           try {
             if (!currentUser.value || !currentUser.value.id) {
               error.value = 'Cannot apply: User details not available. Please refresh.';
