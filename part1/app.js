@@ -60,12 +60,11 @@ let dbPool; // This will be our connection pool
             } else {
                 console.error(`Error executing SQL statement: ${statement.substring(0, 100)}...`);
                 console.error('SQL Error:', err.message);
-                // For a critical setup error, you might want to re-throw or exit
-                // throw err; // Or handle more gracefully
+                throw err;
             }
         }
     }
-    console.log('database schema created and data seeded successfully (or already existed/seeded).');
+    console.log('database schema created.');
     await tempPool.end();
     connectionForSetup = null;
 
