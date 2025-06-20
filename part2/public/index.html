@@ -170,8 +170,8 @@
           }
         }
 
-        // Define displayLoginError within setup scope
-        function displayLoginError() { // <<< ADDED THIS FUNCTION DEFINITION
+        // added displayLoginError within setup scope
+        function displayLoginError() {
             const urlParams = new URLSearchParams(window.location.search);
             const error = urlParams.get('error');
             const loginErrorMessageDiv = document.getElementById('errorMessage');
