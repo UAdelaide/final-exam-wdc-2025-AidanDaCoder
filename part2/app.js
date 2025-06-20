@@ -236,7 +236,7 @@ app.get('/api/my-dogs', ensureAuthenticated, ensureOwner, async (req, res) => {
     }
 });
 
-//question 16,  new api endpoint to get current logged-in user's details
+//question 16, added a new api endpoint to get current logged-in user's details
 app.get('/api/users/me', ensureAuthenticated, async (req, res) => {
     // ensureAuthenticated checks if req.session.user exists or not
     if (req.session.user) {
