@@ -10,7 +10,7 @@ var logger = require('morgan');
 var mysql = require('mysql2/promise');
 // added promise file system methods
 var fs = require('fs/promises');
-//
+// added user session management for login
 var session = require('express-session');
 
 const app = express();
