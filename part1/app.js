@@ -38,21 +38,17 @@ let dbPool; // This will be our connection pool
     console.log('Connected to MySQL server for database setup.');
 
     // 2. Read the dogwalks.sql file
-    const sqlFilePath = path.join(__dirname, 'dogwalks.sql'); // Assumes dogwalks.sql is in the same directory as app.js
+    const sqlFilePath = path.join(__dirname, 'dogwalks.sql');
     const sqlScript = await fs.readFile(sqlFilePath, 'utf-8');
 
-    // 3. Execute the SQL script (creates database, tables, and inserts data)
-    // Splitting the script into individual statements is more robust
-    const statements = sqlScript.split(';\n').map(stmt => stmt.trim()).filter(stmt => stmt.length > 0);
+    const statements = sqlScript.split(';\n').map(stmt) => stmt.trim()).filter(stmt => stmt.length > 0);
     for (const statement of statements) {
         if (statement.startsWith('--') || statement.startsWith('/*')) {
-            continue; // Skip comments
+            continue;
         }
         try {
             await connectionForSetup.query(statement);
-            // console.log(`Executed: ${statement.substring(0, 50)}...`);
         } catch (err) {
-            // Gracefully handle "database exists", "table exists", or "duplicate entry" errors during setup/seeding
             if (err.code === 'ER_DB_CREATE_EXISTS' || err.code === 'ER_TABLE_EXISTS_ERROR') {
                 console.warn('Setup warning');
             } else if (err.code === 'ER_DUP_ENTRY' && statement.toUpperCase().startsWith('INSERT')) {
