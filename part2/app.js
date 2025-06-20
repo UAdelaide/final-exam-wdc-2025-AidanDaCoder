@@ -29,7 +29,7 @@ app.use(cookieParser()); // for parsing cookies
 
 //session configuration
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'dog', 
+    secret: process.env.SESSION_SECRET || 'dog',
     resave: false,
     saveUninitialized: true, // sets to true to store session on first request
     cookie: {
@@ -38,6 +38,9 @@ app.use(session({
         maxAge: 100000000 // cookie valid for a time of 100 million milliseconds
     }
 }));
+
+//serve static files from the 'public' directory
+app
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
