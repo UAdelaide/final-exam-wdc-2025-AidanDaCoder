@@ -84,10 +84,9 @@ async function initialiseDatabaseAndPool() {
             connectionLimit: 10,
             queueLimit: 0
         });
-        console.log(`Connected to the ${process.env.DB_DATABASE_P2 || 'DogWalkService'} database.`);
         return dbPool;
     } catch (error) {
-        console.error('FATAL: Could not initialize database pool (Part 2):', error);
+        console.error('Could not initialise database pool', error);
         process.exit(1); // Exit if DB connection fails
     }
 }
