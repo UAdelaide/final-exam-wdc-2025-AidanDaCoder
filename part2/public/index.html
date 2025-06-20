@@ -150,7 +150,7 @@
         const dogsWithPictures = ref([]);
         const isLoadingDogs = ref(true);
         const dogFetchError = ref('');
-
+        
         async function fetchRandomDogImage() {
           try {
             const response = await fetch('https://dog.ceo/api/breeds/image/random');
