@@ -44,6 +44,7 @@ async function initialiseDatabase() {
                 if (err.code === 'ER_DB_CREATE_EXISTS' || err.code === 'ER_TABLE_EXISTS_ERROR') {
                     console.warn(`Warning during setup: ${err.message}`);
                 } else if (err.code === 'ER_DUP_ENTRY' && statement.toUpperCase().startsWith('INSERT')) {
+                    console.warn(`Warning: Duplicate entry skipped during seeding for statement: ${statement.substring(0, 50)}...`);
                 }
             }
         }
