@@ -111,6 +111,23 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/?error=' + encodeURIComponent('Please log in to access that page.'));
 }
 
+// middleware to check if user is an owner
+function ensureOwner(req, res, next) {
+    if (req.session.user && req.session.user.role === 'owner') {
+        return next();
+    }
+    res.status(403).send('Forbidden: Owners only.');
+}
+
+// middleware to check if user is a walker
+function ensureWalker(req, res, next) {
+    if (req.session.user && req.session.user.role === 'walker') {
+        return next();
+    }
+    res.status(403).send('Forbidden: Walkers only.');
+}
+
+
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 
