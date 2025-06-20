@@ -64,7 +64,7 @@ async function initialiseDatabase() {
 
 }
 
-async functiongetConnection {
+async function getConnection() {
     return pool.getConnection();
 }
 
