@@ -258,8 +258,10 @@ app.get('/api/dogs', async (req, res) => {
         connection = await getDBConnection(); // change in this from getConnection to getDBConnection
         const query = `
             SELECT
+                d.dog_id,
                 d.name AS dog_name,
                 d.size,
+                d.owner_id,  
                 u.username AS owner_username
             FROM Dogs d
             JOIN Users u ON d.owner_id = u.user_id;
