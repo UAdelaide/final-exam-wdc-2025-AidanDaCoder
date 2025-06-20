@@ -51,6 +51,8 @@ async function initialiseDatabase() {
                 }
             }
         }
+
+        console.log('successfully created database schema');
         
     }
 }
