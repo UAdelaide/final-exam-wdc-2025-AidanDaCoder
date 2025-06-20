@@ -25,7 +25,7 @@ let dbPool;
     const tempPool = mysql.createPool({
         host: process.env.DB_HOST || 'localhost',
         user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASSWORD || '123',
+        password: process.env.DB_PASSWORD || '',
         waitForConnections: true,
         connectionLimit: 1,
         queueLimit: 0,
