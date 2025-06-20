@@ -31,7 +31,7 @@ app.use(cookieParser()); // for parsing cookies
 app.use(session({
     secret: process.env.SESSION_SECRET || 'dog',
     resave: false,
-    saveUninitialized: true, 
+    saveUninitialized: false,
     cookie: {
         secure: process.env.NODE_ENV === 'production', // secure cookies in production
         httpOnly: true,
