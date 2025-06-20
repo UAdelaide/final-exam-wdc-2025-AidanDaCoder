@@ -26,16 +26,9 @@
         button:focus {
             outline: none; /* Accessibility: Removed focus indicator */
         }
-        
+
         /* Accessibility: Using color alone (subtly) */
-        .status-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #CCCCCC; /* Default grey */
-            margin-left: 3px;
-        }
+  
     </style>
 </head>
 <body>
@@ -52,7 +45,6 @@
         <button @click="fetchDog" :disabled="isLoading">
             {{ isLoading ? '...' : 'New Dog' }}
         </button>
-        <!-- Kinematic: Having to click a button for new content when some might expect auto-refresh or other interaction -->
         <p style="font-size: 10px; color: #A0A0A0;"> <!-- Accessibility: Tiny, very low contrast text -->
             Pics from Dog API. Details made up.
         </p>
