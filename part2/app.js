@@ -250,7 +250,7 @@ app.get('/api/users/me', ensureAuthenticated, async (req, res) => {
     }
 });
 
-//question 17, exact same api get as part 1
+//question 17, exact same /api/dogs get as part 1
 // /api/dogs
 app.get('/api/dogs', async (req, res) => {
     let connection;
@@ -273,6 +273,7 @@ app.get('/api/dogs', async (req, res) => {
         if (connection) connection.release();
     }
 });
+
 // call initialise and then start listening since app.js is now the main entry point
 initialiseDatabaseAndPool().then(() => {
     app.listen(PORT, () => {
