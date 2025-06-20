@@ -81,17 +81,10 @@ let dbPool; // This will be our connection pool
       queueLimit: 0
     });
 
-    console.log(`Connected to the ${process.env.DB_DATABASE || 'DogWalkService'} database for application use.`);
+    console.log(`connected to the ${process.env.DB_DATABASE || 'DogWalkService'} database for application use.`);
 
-    // If your start script is `node app.js`, start listening here.
-    // If `bin/www` is used, this listen call would be there.
-    // For exam simplicity, let's assume `node app.js` is the start.
     app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
-        console.log('Available routes:');
-        console.log(`  GET http://localhost:${PORT}/api/dogs`);
-        console.log(`  GET http://localhost:${PORT}/api/walkrequests/open`);
-        console.log(`  GET http://localhost:${PORT}/api/walkers/summary`);
     });
 
   } catch (err) {
