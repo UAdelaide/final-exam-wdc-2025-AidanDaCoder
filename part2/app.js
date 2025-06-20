@@ -230,7 +230,7 @@ app.get('/api/my-dogs', ensureAuthenticated, ensureOwner, async (req, res) => {
         res.json(dogs);
     } catch (error) {
         console.error("Error fetching owner's dogs:", error);
-        res.status(500).json({ error: "Failed to retrieve your dogs", details: error.message });
+        res.status(500).json({ error: "Failed to retrieve owner's dogs", details: error.message });
     } finally {
         if (connection) connection.release();
     }
