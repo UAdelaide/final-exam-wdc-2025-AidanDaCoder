@@ -2,6 +2,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+import 'dotenv/config';
+import { pool, initializeDatabase, getConnection } from './db.js';
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
