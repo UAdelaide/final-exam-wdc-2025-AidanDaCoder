@@ -210,13 +210,12 @@ app.get('/logout', (req, res) => {
     });
 });
 
-// get dogs for the currently logged-in owner
+//question 15, get dogs for the currently logged-in owner
 app.get('/api/my-dogs', ensureAuthenticated, ensureOwner, async (req, res) => {
     let connection;
     try {
-        const ownerId = req.session.user.id; // Get owner_id from session
+        const ownerId = req.session.user.id; // gets owner_id from session
         if (!ownerId) {
-            // This should not happen if ensureAuthenticated and ensureOwner are working
             return res.status(400).json({ error: "Owner ID not found in session." });
         }
 
