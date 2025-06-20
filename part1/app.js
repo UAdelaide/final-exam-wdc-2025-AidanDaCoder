@@ -58,8 +58,8 @@ let dbPool; // This will be our connection pool
             } else if (err.code === 'ER_DUP_ENTRY' && statement.toUpperCase().startsWith('INSERT')) {
                 // console.warn(`Seeding warning: Duplicate entry skipped for: ${statement.substring(0, 50)}...`);
             } else {
-                console.error(`Error executing SQL statement.`);
-                console.error('SQL Error:', err.message);
+                console.error('error executing SQL statement.');
+                console.error('SQL Error.');
                 throw err;
             }
         }
