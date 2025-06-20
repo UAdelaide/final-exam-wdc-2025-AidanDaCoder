@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 
-//api/dogs
+// api/dogs
 app.get('/api/dogs', async (req, res) => {
     let connection;
     try {
@@ -42,7 +42,7 @@ app.get('/api/dogs', async (req, res) => {
     }
 });
 
-//api/walkrequests/open
+// api/walkrequests/open
 app.get('/api/walkrequests/open', async (req, res) => {
     let connection;
     try {
@@ -100,7 +100,8 @@ app.get('/api/walkers/summary', async (req, res) => {
             ...walker,
             completed_walks: Number(walker.completed_walks), // Ensure it's a number
             total_ratings: Number(walker.total_ratings), // Ensure it's a number
-            average_rating: walker.total_ratings > 0 ? parseFloat(parseFloat(walker.average_rating).toFixed(2)) : null
+            average_rating: walker.total_ratings > 0 ?
+            parseFloat(parseFloat(walker.average_rating).toFixed(2)) : null
         }));
         res.json(formattedResults);
     } catch (error)
