@@ -7,7 +7,6 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         body {
-            background-color: #E0E0E0;
             color: #757575; /*Accessibility: for low contrast */
             text-align: right; /* Cognitive: content improperly placed to the right for no reason */
         }
@@ -26,7 +25,7 @@
     <div id="app">
         <h1>Dog o da Day!</h1>
         <div v-if="isLoading">Loading image...</div>
-        <img src="#" alt="" v-bind:src="dogImageUrl" v-bind:alt="altText" v-if="!isLoading && dogImageUrl"/>
+        <img v-bind:src="dogImageUrl" v-bind:alt="altText" v-if="!isLoading && dogImageUrl"/>
         <div class="dog-info" v-if="!isLoading">
             <p>Name: {{ dogName }} <span class="status-dot" v-bind:style="{ backgroundColor: apiStatusColor }"></span></p>
             <p>Breed: {{ dogBreed }}</p>
