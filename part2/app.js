@@ -195,7 +195,7 @@ app.get('/walker-dashboard', ensureAuthenticated, ensureWalker, (req, res) => {
 });
 
 
-// Logout route
+// logout route
 app.get('/logout', (req, res) => {
     const username = req.session.user ? req.session.user.username : 'User';
     req.session.destroy(err => {
