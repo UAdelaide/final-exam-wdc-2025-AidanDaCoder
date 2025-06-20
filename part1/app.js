@@ -95,8 +95,8 @@ let dbPool; // This will be our connection pool
     });
 
   } catch (err) {
-    console.error('FATAL: Error during database setup or initial connection. Ensure MySQL is running and accessible.', err);
-    if (connectionForSetup) await connectionForSetup.release(); 
+    console.error('Error during database setup or initial connection.', err);
+    if (connectionForSetup) await connectionForSetup.release();
     process.exit(1);
   }
 })();
