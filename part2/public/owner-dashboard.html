@@ -109,6 +109,8 @@
         const error = ref('');
         // new const to store owner's dogs
         const ownerDogs = ref([]);
+        //new const for function error
+        const loadingDogsError = ref(false);
 
         // new function to load owner's dogs
          async function loadOwnerDogs() {
