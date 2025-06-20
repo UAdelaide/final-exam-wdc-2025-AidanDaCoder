@@ -131,11 +131,10 @@ app.get('/', (req, res) => {
     if (req.session.user) {
         if (req.session.user.role === 'owner') {
             return res.redirect('/owner-dashboard');
-        } else if (req.session.user.role === 'walker') {
+        } else (req.session.user.role === 'walker') {
             return res.redirect('/walker-dashboard');
         }
     }
-    // If not logged in, or role is unknown (shouldn't happen with proper login)
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
