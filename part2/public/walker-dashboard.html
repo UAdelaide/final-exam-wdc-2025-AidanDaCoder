@@ -102,7 +102,11 @@
 
         async function applyToWalk(requestId) {
           try {
-             applying[requestId] = true; 
+            if (!currentUser.value || !currentUser.value.id) {
+              error.value = 'Cannot apply: User details not available. Please refresh.';
+              return; // Stop if no current user ID
+            }
+            applying[requestId] = true;
             const res = await fetch(`/api/walks/${requestId}/apply`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
