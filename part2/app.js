@@ -213,11 +213,10 @@ app.get('/logout', (req, res) => {
 // call initialise and then start listening since app.js is now the main entry point
 initialiseDatabaseAndPool().then(() => {
     app.listen(PORT, () => {
-        console.log(`Server for Part 2 running on http://localhost:${PORT}`);
-        console.log(`Login page: http://localhost:${PORT}/`);
+        console.log(`Server running on http://localhost:${PORT}`);
     });
-}).catch(err => {
-    console.error("Failed to start server (Part 2):", err);
+}).catch((err) => {
+    console.error("Failed to start server', err);
     process.exit(1); // Exit if server can't start due to DB init failure
 });
 
