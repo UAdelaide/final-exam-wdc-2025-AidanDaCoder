@@ -131,7 +131,8 @@ app.get('/', (req, res) => {
     if (req.session.user) {
         if (req.session.user.role === 'owner') {
             return res.redirect('/owner-dashboard');
-        } else if (req.session.user.role === 'walker') {
+        }
+        if (req.session.user.role === 'walker') {
             return res.redirect('/walker-dashboard');
         }
     }
