@@ -192,6 +192,10 @@ app.get('/owner-dashboard', ensureAuthenticated, ensureOwner, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'owner-dashboard.html'));
 });
 
+// Walker Dashboard
+app.get('/walker-dashboard', ensureAuthenticated, ensureWalker, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'walker-dashboard.html'));
+});
 
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
