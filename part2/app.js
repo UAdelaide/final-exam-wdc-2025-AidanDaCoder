@@ -210,6 +210,34 @@ app.get('/logout', (req, res) => {
     });
 });
 
+// get dogs for the currently logged-in owner
+app.get('/api/my-dogs', ensureAuthenticated, ensureOwner, async (req, res) => {
+    let connection;
+    try {
+        const ownerId = req.session.user.id; // Get owner_id from session
+        if (!ownerId) {
+            // This should not happen if ensureAuthenticated and ensureOwner are working
+            return res.status(400).json({ error: "Owner ID not found in session." });
+        }
+
+        connection = await getDbConnection();
+        const query = `
+            SELECT dog_id, name, size
+            FROM Dogs
+            WHERE owner_id = ?
+            ORDER BY name ASC;
+        `;
+        const [dogs] = await connection.query(query, [ownerId]);
+        res.json(dogs);
+    } catch (error) {
+        console.error("Error fetching owner's dogs:", error);
+        res.status(500).json({ error: "Failed to retrieve your dogs", details: error.message });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+
 // call initialise and then start listening since app.js is now the main entry point
 initialiseDatabaseAndPool().then(() => {
     app.listen(PORT, () => {
