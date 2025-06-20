@@ -255,7 +255,7 @@ app.get('/api/users/me', ensureAuthenticated, async (req, res) => {
 app.get('/api/dogs', async (req, res) => {
     let connection;
     try {
-        connection = await getConnection();
+        connection = await getDBConnection(); // changed
         const query = `
             SELECT
                 d.name AS dog_name,
