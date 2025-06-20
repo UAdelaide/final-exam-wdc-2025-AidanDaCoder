@@ -56,7 +56,7 @@ async function initialiseDatabase() {
         await tempPool.end();
 
     } catch (error) {
-        console.error('Failed to initialize database:', error);
+        console.error('failed to initialise database:', error);
         process.exit(1);
     } finally {
         if (connection) connection.release();
