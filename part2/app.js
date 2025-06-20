@@ -2,14 +2,15 @@ const express = require('express');
 const path = require('path');
 require('dotenv').config();
 
-//added middleware for parsing cookies from incoming HTTP requests
+// added middleware for parsing cookies from incoming HTTP requests
 var cookieParser = require('cookie-parser');
-//added log for HTTP requests to the console
+// added log for HTTP requests to the console
 var logger = require('morgan');
-//added ability to connect to MYSQL using promises
+// added ability to connect to MYSQL using promises
 var mysql = require('mysql2/promise');
-//added promise file system methods
+// added promise file system methods
 var fs = require('fs/promises');
+//
 var session = require('express-session');
 
 const app = express();
