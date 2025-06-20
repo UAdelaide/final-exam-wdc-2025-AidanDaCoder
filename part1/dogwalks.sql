@@ -82,3 +82,5 @@ INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, st
 INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status) VALUES ( (SELECT dog_id FROM Dogs WHERE name = 'mediumAidan' AND owner_id = (SELECT user_id FROM Users WHERE username = 'aidan')), '2025-06-10 09:40:00', 45, 'Mount Ave', 'accepted' );
 
 INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status) VALUES ( (SELECT dog_id FROM Dogs WHERE name = 'lilAidan' AND owner_id = (SELECT user_id FROM Users WHERE username = 'aidan')), '2025-06-10 09:50:00', 45, 'Mount Ave', 'accepted' );
+
+/*for walkers/summar */
