@@ -33,7 +33,7 @@
             <p>Breed: {{ dogBreed }}</p>
             <!-- Cognitive: Minimal, perhaps unengaging details -->
         </div>
-        <button @click="fetchDog" :disabled="isLoading">
+        <button type="button" @click="fetchDog" :disabled="isLoading">
             {{ isLoading ? '...' : 'New Dog' }}
         </button>
         <p style="font-size: 10px; color: #A0A0A0;"> <!-- Accessibility: tiny, very low contrast text -->
