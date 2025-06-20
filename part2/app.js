@@ -197,6 +197,22 @@ app.get('/walker-dashboard', ensureAuthenticated, ensureWalker, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'walker-dashboard.html'));
 });
 
+
+// Logout route
+app.get('/logout', (req, res) => {
+    const username = req.session.user ? req.session.user.username : 'User';
+    req.session.destroy(err => {
+        if (err) {
+            console.error('Session destruction error:', err);
+            return res.redirect('/');
+        }
+        res.clearCookie('connect.sid');
+        console.log(`${username} logged out.`);
+        res.redirect('/');
+    });
+});
+
+
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 
