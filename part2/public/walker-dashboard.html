@@ -61,6 +61,10 @@
         const message = ref('');
         const error = ref('');
         const user = 3;
+        const currentUser = ref(null); // <<< NEW: To store current user details
+        const loadingUser = ref(true); // <<< NEW: Loading state for user
+        const loadingWalks = ref(true); // Loading state for walks
+        const applying = reactive({}); // <<< NEW: To track applying state for each wa
 
         async function loadWalkRequests() {
           try {
