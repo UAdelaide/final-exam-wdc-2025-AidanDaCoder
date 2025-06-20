@@ -96,7 +96,7 @@ app.get('/api/walkers/summary', async (req, res) => {
             ORDER BY u.username;
         `;
         const [results] = await connection.query(query);
-        const formattedResults = results.map(walker ()=> ({
+        const formattedResults = results.map(walker => ({
             ...walker,
             completed_walks: Number(walker.completed_walks), // Ensure it's a number
             total_ratings: Number(walker.total_ratings), // Ensure it's a number
