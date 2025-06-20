@@ -35,12 +35,14 @@ app.get('/api/dogs', async (req, res) => {
         const [results] = await connection.query(query);
         res.json(results);
     } catch (error) {
-        console.error("Error fetching dogs:", error);
-        res.status(500).json({ error: "Failed to retrieve dogs", details: error.message });
+        console.error("error fetching dogs:", error);
+        res.status(500).json({ error: "failed to retrieve dogs", details: error.message });
     } finally {
         if (connection) connection.release();
     }
 });
+
+
 
 
 module.exports = app;
