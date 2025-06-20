@@ -210,6 +210,16 @@ app.get('/logout', (req, res) => {
     });
 });
 
+initialiseDatabaseAndPool().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server for Part 2 running on http://localhost:${PORT}`);
+        console.log(`Login page: http://localhost:${PORT}/`);
+    });
+}).catch(err => {
+    console.error("Failed to start server (Part 2):", err);
+    process.exit(1); // Exit if server can't start due to DB init failure
+});
+
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
 
