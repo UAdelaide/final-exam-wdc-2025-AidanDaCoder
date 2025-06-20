@@ -63,7 +63,7 @@ async function initialiseDatabaseAndPool() {
             try { await setupConnection.query(statement); }
             catch (err) {
                 if (['ER_DB_CREATE_EXISTS', 'ER_TABLE_EXISTS_ERROR', 'ER_DUP_ENTRY'].includes(err.code)) {
-                    // console.warn(`Setup/Seeding info (Part 2): ${err.message}`);
+                    console.warn('');
                 } else {
                     console.error(`Error in SQL (Part 2): ${statement.substring(0,100)}...`, err.message);
                     throw err; // Critical error during setup
