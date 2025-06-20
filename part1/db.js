@@ -25,6 +25,11 @@ async function initialiseDatabase() {
             connectionLimit: 1,
             queueLimit: 0,
             multipleStatements: true
-        })
+        });
+         connection = await tempPool.getConnection();
+        console.log('Connected to MySQL server for database setup.');
+
+        const sqlFilePath = path.join(process.cwd(), 'dogwalks.sql');
+        const sqlScript = await fs.readFile(sqlFilePath, 'utf-8');
     }
 }
