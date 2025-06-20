@@ -110,7 +110,22 @@
         // store owner's dogs
         const ownerDogs = ref([]);
 
-        
+         async function loadOwnerDogs() {
+          loadingDogsError.value = false;
+          try {
+            const res = await fetch('/api/my-dogs');
+            if (!res.ok) {
+                const errData = await res.json();
+                throw new Error(errData.error || 'Failed to fetch your dogs');
+            }
+            ownerDogs.value = await res.json();
+          } catch (err) {
+            console.error("Error in loadOwnerDogs:", err);
+            loadingDogsError.value = true;
+            // Optionally set a general error message for the user
+            // error.value = 'Could not load your dog list. Please try again later.';
+          }
+        }
 
         async function loadWalks() {
           try {
