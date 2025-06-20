@@ -15,7 +15,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// Static files (if any, though not strictly required by the prompt)
 // app.use(express.static(path.join(__dirname, 'public')));
 
 let dbPool;
