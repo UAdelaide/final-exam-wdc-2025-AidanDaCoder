@@ -27,8 +27,7 @@ async function initialiseDatabase() {
             multipleStatements: true
         });
         connection = await tempPool.getConnection();
-        console.log('Connected to MySQL server.');
-
+        //console.log('Connected to MySQL server.');
         const sqlFilePath = path.join(process.cwd(), 'dogwalks.sql');
         const sqlScript = await fs.readFile(sqlFilePath, 'utf-8');
 
