@@ -65,23 +65,21 @@ let dbPool; // This will be our connection pool
             }
         }
     }
-    console.log('Database schema created and data seeded successfully (or already existed/seeded).');
-    await tempPool.end(); // Close the temporary setup pool
-    connectionForSetup = null; // Clear the connection variable
+    console.log('database schema created and data seeded successfully (or already existed/seeded).');
+    await tempPool.end();
+    connectionForSetup = null;
 
-
-    // 4. Create the main connection pool for the application to the specific database
     dbPool = mysql.createPool({
       host: process.env.DB_HOST || 'localhost',
       user: process.env.DB_USER || 'root',
-      password: process.env.DB_PASSWORD || '',
-      database: process.env.DB_DATABASE || 'DogWalkService', // Database name from your .env or default
+      password: process.env.DB_PASSWORD || '123',
+      database: process.env.DB_DATABASE || 'DogWalkService',
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0
     });
 
-    console.log(`connected to the ${process.env.DB_DATABASE || 'DogWalkService'} database for application use.`);
+    console.log(`connected to the ${process.env.DB_DATABASE || 'DogWalkService'} database.`);
 
     app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
