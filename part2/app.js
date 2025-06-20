@@ -21,10 +21,11 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
 
-pp.use(logger('dev')); // For logging HTTP requests
-app.use(express.json()); // For parsing application/json
-app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded (login form)
-app.use(cookieParser()); // For parsing cookies
+// added middleware
+pp.use(logger('dev')); // for logging HTTP requests
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded (login form)
+app.use(cookieParser()); // for parsing cookies
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
