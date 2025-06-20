@@ -107,11 +107,10 @@
         const walks = ref([]);
         const message = ref('');
         const error = ref('');
-        // store owner's dogs
+        // new const to store owner's dogs
         const ownerDogs = ref([]);
 
-        //// Function to load owner's dogs
-
+        // new function to load owner's dogs
          async function loadOwnerDogs() {
           loadingDogsError.value = false;
           try {
