@@ -48,7 +48,7 @@
                 const dogImageUrl = ref('');
                 const altText = ref('A dog picture');
                 const isLoading = ref(true);
-                const dogName = ref('Fido');
+                const dogName = ref('doggo');
                 const dogBreed = ref('Good Boi');
                 const apiError = ref(false);
 
@@ -76,9 +76,6 @@
                     }
                 };
 
-                const apiStatusColor = computed(() => {
-                    return apiError.value ? '#FF7043' : '#66BB6A';
-                });
 
                 onMounted(fetchDog);
 
@@ -89,7 +86,6 @@
                     dogName,
                     dogBreed,
                     fetchDog,
-                    apiStatusColor
                 };
             }
         }).mount('#app');
