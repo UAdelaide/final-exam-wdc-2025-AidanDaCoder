@@ -110,6 +110,8 @@
         // store owner's dogs
         const ownerDogs = ref([]);
 
+        //// Function to load owner's dogs
+
          async function loadOwnerDogs() {
           loadingDogsError.value = false;
           try {
@@ -122,8 +124,6 @@
           } catch (err) {
             console.error("Error in loadOwnerDogs:", err);
             loadingDogsError.value = true;
-            // Optionally set a general error message for the user
-            // error.value = 'Could not load your dog list. Please try again later.';
           }
         }
 
