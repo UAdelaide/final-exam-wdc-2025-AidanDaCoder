@@ -126,7 +126,9 @@
           } catch (err) {
             error.value = err.message;
             message.value = '';
-          }
+            } finally {
+            applying[requestId] = false; // Reset applying state
+            }
         }
 
 
