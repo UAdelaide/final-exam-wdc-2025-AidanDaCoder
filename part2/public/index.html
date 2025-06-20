@@ -111,7 +111,8 @@
 
   <script>
     const { createApp } = Vue;
-     setup() {
+    createApp({
+       setup() {
         const dogsWithPictures = ref([]);
         const isLoadingDogs = ref(true);
         const dogFetchError = ref('');
@@ -165,8 +166,6 @@
             isLoadingDogs.value = false;
           }
         }
-        }
-    createApp({
       data() {
         return {
           message: 'Welcome to the Dog Walking Service!'
