@@ -39,9 +39,17 @@
       </div>
       <div class="card-body">
         <form @submit.prevent="submitWalkRequest">
+          <!-- MODIFIED DOG ID INPUT TO BE A SELECT DROPDOWN -->
           <div class="mb-3">
-            <label class="form-label">Dog ID</label>
-            <input v-model="form.dog_id" type="number" class="form-control" required>
+            <label for="dogSelect" class="form-label">Select Your Dog</label>
+            <select id="dogSelect" v-model="form.dog_id" class="form-select" required>
+              <option disabled value="">Please select a dog</option>
+              <option v-for="dog in ownerDogs" :key="dog.dog_id" :value="dog.dog_id">
+                {{ dog.name }} ({{ dog.size }})
+              </option>
+            </select>
+            <div v-if="ownerDogs.length === 0 && !loadingDogsError" class="form-text">Loading your dogs... or you have no dogs registered.</div>
+            <div v-if="loadingDogsError" class="form-text text-danger">Could not load your dogs.</div>
           </div>
           <div class="mb-3">
             <label class="form-label">Requested Date & Time</label>
