@@ -21,6 +21,10 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+
+//// get the initialise function from app.js
+const { initialiseDatabaseAndPool } = require('../app');
+
 /**
  * Listen on provided port, on all network interfaces.
  */
