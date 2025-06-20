@@ -10,7 +10,7 @@
             background-color: lightgray;
             color: grey; /*Accessibility: colour of text has low contrast with background */
             text-align: right; /* Cognitive: content improperly placed to the right for no reason */
-            font-size: 10px; 
+            font-size: 10px; /* Accessibility: small text hard to read */
         }
         img {
             max-width: 300px;
@@ -35,7 +35,7 @@
         <button type="button" @click="fetchDog" :disabled="isLoading">
             {{ isLoading ? '...' : 'New Dog' }}
         </button>
-        <p> <!-- Accessibility: tiny, very low contrast text -->
+        <p
             Pics from Dog API. Details made up.
         </p>
     </div>
