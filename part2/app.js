@@ -47,15 +47,14 @@ async function initialiseDatabaseAndPool() {
         const tempPool = mysql.createPool({
             host: process.env.DB_HOST || 'localhost',
             user: process.env.DB_USER || 'root',
-            password: process.env.DB_PASSWORD || '', // Your MySQL password
+            password: process.env.DB_PASSWORD || '',
             waitForConnections: true,
             connectionLimit: 1,
             queueLimit: 0,
-            multipleStatements: true // To run the whole SQL script
+            multipleStatements: true
         });
         const setupConnection = await tempPool.getConnection();
         console.log('Connected to MySQL server for database setup (Part 2).');
-        // IMPORTANT: Update this path if your SQL file for Part 2 is named differently
         const sqlFilePath = path.join(__dirname, 'dogwalks_part2.sql');
         const sqlScript = await fs.readFile(sqlFilePath, 'utf-8');
         const statements = sqlScript.split(';\n').map(stmt => stmt.trim()).filter(stmt => stmt.length > 0);
