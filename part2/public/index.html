@@ -81,7 +81,7 @@
         No dogs are currently listed in our database.
       </div>
 
-      <div v-if="!isLoadingDogs && dogsWithPictures.length > 0" class="table-responsive"> <!-- Added for responsiveness -->
+      <div v-if="!isLoadingDogs && dogsWithPictures.length > 0" class="table-responsive">
         <table class="table dog-table">
           <thead>
             <tr>
@@ -93,7 +93,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="dog in dogsWithPictures" :key="dog.dog_id"> <!-- Use dog.dog_id from DB as key -->
+            <tr v-for="dog in dogsWithPictures" :key="dog.dog_id">
               <td>{{ dog.dog_id }}</td>
               <td>{{ dog.dog_name }}</td>
               <td class="text-capitalize">{{ dog.size }}</td>
@@ -106,8 +106,6 @@
           </tbody>
         </table>
       </div>
-
-  </div>
 
   <script>
     const { createApp } = Vue;
