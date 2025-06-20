@@ -59,6 +59,7 @@ async function initialiseDatabase() {
         console.error('Failed to initialize database:', error);
         process.exit(1);
         } finally {
-
+            if (connection) connection.release();
         }
+        
 }
