@@ -261,10 +261,11 @@ app.get('/api/dogs', async (req, res) => {
                 d.dog_id,
                 d.name AS dog_name,
                 d.size,
-                d.owner_id,  
+                d.owner_id,
                 u.username AS owner_username
             FROM Dogs d
             JOIN Users u ON d.owner_id = u.user_id;
+            ORDER BY d.dog_id ASC;
         `;
         const [results] = await connection.query(query);
         res.json(results);
