@@ -9,7 +9,6 @@ var fs = require('fs/promises');
 require('dotenv').config();
 
 var app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(logger('dev'));
 app.use(express.json());
