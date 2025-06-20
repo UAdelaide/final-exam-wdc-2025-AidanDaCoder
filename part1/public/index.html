@@ -31,7 +31,6 @@
         <div class="dog-info" v-if="!isLoading">
             <p>Name: {{ dogName }} <span class="status-dot" :style="{ backgroundColor: apiStatusColor }"></span></p>
             <p>Breed: {{ dogBreed }}</p>
-            <!-- Cognitive: Minimal, perhaps unengaging details -->
         </div>
         <button type="button" @click="fetchDog" :disabled="isLoading">
             {{ isLoading ? '...' : 'New Dog' }}
