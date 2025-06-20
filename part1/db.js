@@ -44,10 +44,10 @@ async function initialiseDatabase() {
                 if (err.code === 'ER_DB_CREATE_EXISTS' || err.code === 'ER_TABLE_EXISTS_ERROR') {
                     console.warn(`warning during setup`);
                 } else if (err.code === 'ER_DUP_ENTRY' && statement.toUpperCase().startsWith('INSERT')) {
-                    console.warn(`warning: Duplicate entry skipped for statement`);
+                    console.warn(`warning duplicate entry skipped for statement`);
                 }
                 else {
-                    console.error
+                    console.error(`error executing statement`)
                 }
             }
         }
