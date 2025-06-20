@@ -2,3 +2,14 @@ import mysql from 'mysql2/promise';
 import fs from 'fs/promises';
 import path from 'path';
 import 'dotenv/config';
+
+const pool = mysql.createPool({
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'you',
+    password: process.env.DB_PASSWORD || '123',
+    database: process.env.DB_DATABASE || 'DogWalkService',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    multipleStatements: true
+});
