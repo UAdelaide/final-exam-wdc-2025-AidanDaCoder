@@ -64,7 +64,7 @@
         const currentUser = ref(null); // q16, new to store current user details
         const loadingUser = ref(true); // q16, new for Loading state for user
         const loadingWalks = ref(true); // q16, new for loading state for walks
-        const applying = reactive({}); // <<< NEW: To track applying state for each wa
+        const applying = reactive({}); // q16, new to track applying state for each walk
 
         async function loadWalkRequests() {
           try {
