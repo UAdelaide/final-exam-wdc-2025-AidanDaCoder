@@ -39,7 +39,7 @@ app.use(session({
 }));
 
 // database connection pool
-let dbPool; // declare globally within this module
+let dbPool; // declared globally within this module
 
 async function initialiseDatabaseAndPool() {
    try {
