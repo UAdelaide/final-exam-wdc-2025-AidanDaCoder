@@ -28,20 +28,19 @@ let dbPool; // This will be our connection pool
     const tempPool = mysql.createPool({
         host: process.env.DB_HOST || 'localhost',
         user: process.env.DB_USER || 'root', // Replace with your default if needed
-        password: process.env.DB_PASSWORD || '', // Replace with your default if needed
+        password: process.env.DB_PASSWORD || '123',
         waitForConnections: true,
-        connectionLimit: 1, // Just need one for setup
+        connectionLimit: 1,
         queueLimit: 0,
-        multipleStatements: true // Essential for running the .sql file
+        multipleStatements: true
     });
     connectionForSetup = await tempPool.getConnection();
     console.log('Connected to MySQL server for database setup.');
 
-    // 2. Read the dogwalks.sql file
     const sqlFilePath = path.join(__dirname, 'dogwalks.sql');
     const sqlScript = await fs.readFile(sqlFilePath, 'utf-8');
 
-    const statements = sqlScript.split(';\n').map(stmt) => stmt.trim()).filter(stmt => stmt.length > 0);
+    const statements = sqlScript.split(';\n').map((stmt) => stmt.trim()).filter((stmt) => stmt.length > 0);
     for (const statement of statements) {
         if (statement.startsWith('--') || statement.startsWith('/*')) {
             continue;
