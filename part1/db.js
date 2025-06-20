@@ -15,5 +15,8 @@ const pool = mysql.createPool({
 });
 
 async function initialiseDatabase() {
-    
+    let connection;
+    try {
+        const tempPool = mysql.createPool
+    }
 }
