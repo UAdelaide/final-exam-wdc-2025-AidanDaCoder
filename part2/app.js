@@ -15,6 +15,7 @@ var session = require('express-session');
 require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(express.json());
