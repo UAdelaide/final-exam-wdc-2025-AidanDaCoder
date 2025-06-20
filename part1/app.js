@@ -42,7 +42,77 @@ app.get('/api/dogs', async (req, res) => {
     }
 });
 
+//api/walkrequests/open
+app.get('/api/walkrequests/open', async (req, res) => {
+    let connection;
+    try {
+        connection = await getConnection();
+        const query = `
+            SELECT
+                wr.request_id,
+                d.name AS dog_name,
+                wr.requested_time,
+                wr.duration_minutes,
+                wr.location,
+                u.username AS owner_username
+            FROM WalkRequests wr
+            JOIN Dogs d ON wr.dog_id = d.dog_id
+            JOIN Users u ON d.owner_id = u.user_id
+            WHERE wr.status = 'open';
+        `;
+        const [results] = await connection.query(query);
+        res.json(results);
+    } catch (error) {
+        console.error("Error fetching open walk requests:", error);
+        res.status(500).json({ error: "Failed to retrieve open walk requests", details: error.message });
+    } finally {
+        if (connection) connection.release();
+    }
+});
 
+
+// /api/walkers/summary
+app.get('/api/walkers/summary', async (req, res) => {
+    let connection;
+    try {
+        connection = await getConnection();
+        // This query calculates completed walks and rating summaries for each walker.
+        const query = `
+            SELECT
+                u.username AS walker_username,
+                (
+                    SELECT COUNT(DISTINCT wa.request_id)
+                    FROM WalkApplications wa
+                    JOIN WalkRequests wr_completed ON wa.request_id = wr_completed.request_id
+                    WHERE wa.walker_id = u.user_id
+                      AND wa.status = 'accepted'
+                      AND wr_completed.status = 'completed'
+                ) AS completed_walks,
+                COUNT(DISTINCT wrate.rating_id) AS total_ratings,
+                AVG(wrate.rating) AS average_rating
+            FROM Users u
+            LEFT JOIN WalkRatings wrate ON u.user_id = wrate.walker_id
+            WHERE u.role = 'walker'
+            GROUP BY u.user_id, u.username
+            ORDER BY u.username;
+        `;
+        const [results] = await connection.query(query);
+        // Ensure average_rating is null if total_ratings is 0, not "0.0000" or similar
+        const formattedResults = results.map(walker => ({
+            ...walker,
+            completed_walks: Number(walker.completed_walks), // Ensure it's a number
+            total_ratings: Number(walker.total_ratings), // Ensure it's a number
+            average_rating: walker.total_ratings > 0 ? parseFloat(parseFloat(walker.average_rating).toFixed(2)) : null
+        }));
+        res.json(formattedResults);
+    } catch (error)
+    {
+        console.error("Error fetching walkers summary:", error);
+        res.status(500).json({ error: "Failed to retrieve walkers summary", details: error.message });
+    } finally {
+        if (connection) connection.release();
+    }
+});
 
 
 module.exports = app;
