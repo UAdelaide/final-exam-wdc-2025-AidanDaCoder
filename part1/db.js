@@ -5,7 +5,7 @@ import 'dotenv/config';
 
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'you',
+    user: process.env.DB_USER || 'test',
     password: process.env.DB_PASSWORD || '123',
     database: process.env.DB_DATABASE || 'DogWalkService',
     waitForConnections: true,
@@ -13,3 +13,7 @@ const pool = mysql.createPool({
     queueLimit: 0,
     multipleStatements: true
 });
+
+async function initialiseDatabase() {
+    
+}
