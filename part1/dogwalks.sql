@@ -88,7 +88,7 @@ INSERT INTO WalkApplications (request_id, walker_id, status) VALUES
 (
     (SELECT request_id FROM WalkRequests
      WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'lilAidan' AND owner_id = (SELECT user_id FROM Users WHERE username = 'aidan'))
-       AND requested_time = '2025-06-11 09:20:00'),
+       AND requested_time = '2025-06-10 09:20:00'),
     (SELECT user_id FROM Users WHERE username = 'chan'),
     'accepted'
 );
