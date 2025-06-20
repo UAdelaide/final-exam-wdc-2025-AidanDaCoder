@@ -12,6 +12,7 @@ var mysql = require('mysql2/promise');
 var fs = require('fs/promises');
 // added user session management for login
 var session = require('express-session');
+require('dotenv').config();
 
 const app = express();
 
