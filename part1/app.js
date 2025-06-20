@@ -96,15 +96,12 @@ let dbPool; // This will be our connection pool
 
   } catch (err) {
     console.error('FATAL: Error during database setup or initial connection. Ensure MySQL is running and accessible.', err);
-    if (connectionForSetup) await connectionForSetup.release(); // Ensure release if error occurred mid-setup
-    process.exit(1); // Exit if DB setup fails critically
+    if (connectionForSetup) await connectionForSetup.release(); 
+    process.exit(1);
   }
 })();
 
 
-// --- API ROUTES ---
-
-// Helper function to get a connection from the pool
 async function getConnection() {
     if (!dbPool) {
         throw new Error("Database pool is not initialized yet.");
@@ -188,7 +185,7 @@ app.get('/api/walkers/summary', async (req, res) => {
             ORDER BY u.username;
         `;
         const [results] = await connection.query(query);
-        const formattedResults = results.map(walker => ({
+        const formattedResults = results.map((walker) => ({
             ...walker,
             completed_walks: Number(walker.completed_walks),
             total_ratings: Number(walker.total_ratings),
