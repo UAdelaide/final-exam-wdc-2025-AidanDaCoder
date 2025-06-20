@@ -27,7 +27,7 @@ let dbPool; // This will be our connection pool
     // 1. Connect to MySQL server (without specifying a database to create it)
     const tempPool = mysql.createPool({
         host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'root', // Replace with your default if needed
+        user: process.env.DB_USER || 'root',
         password: process.env.DB_PASSWORD || '123',
         waitForConnections: true,
         connectionLimit: 1,
