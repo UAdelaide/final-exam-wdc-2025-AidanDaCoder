@@ -165,21 +165,6 @@
             isLoadingDogs.value = false;
           }
         }
-
-        function displayLoginError() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const error = urlParams.get('error');
-            const loginErrorMessageDiv = document.getElementById('loginErrorMessage');
-            if (error && loginErrorMessageDiv) {
-                loginErrorMessageDiv.textContent = decodeURIComponent(error);
-            }
-            const usernameParam = urlParams.get('username');
-            const usernameInput = document.getElementById('username');
-             if (usernameParam && usernameInput) {
-                usernameInput.value = decodeURIComponent(usernameParam);
-            }
-            if (usernameInput && !usernameInput.value) usernameInput.focus();
-            else if (usernameInput && usernameInput.value) document.getElementById('password').focus();
         }
     createApp({
       data() {
