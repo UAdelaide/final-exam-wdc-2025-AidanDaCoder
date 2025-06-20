@@ -41,7 +41,7 @@
         <button @click="fetchDog" :disabled="isLoading">
             {{ isLoading ? '...' : 'New Dog' }}
         </button>
-        <p style="font-size: 10px; color: #A0A0A0;"> <!-- Accessibility: Tiny, very low contrast text -->
+        <p style="font-size: 10px; color: #A0A0A0;"> <!-- Accessibility: tiny, very low contrast text -->
             Pics from Dog API. Details made up.
         </p>
     </div>
@@ -83,7 +83,7 @@
                 };
 
                 const apiStatusColor = computed(() => {
-                    return apiError.value ? '#FF7043' : '#66BB6A'; // Orange-ish for error, Green for success
+                    return apiError.value ? '#FF7043' : '#66BB6A';
                 });
 
                 onMounted(fetchDog);
