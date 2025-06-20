@@ -38,8 +38,8 @@ app.use(session({
     }
 }));
 
-// --- Database Connection Pool ---
-let dbPool; // Declare globally within this module
+// database connection pool
+let dbPool; // declare globally within this module
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
