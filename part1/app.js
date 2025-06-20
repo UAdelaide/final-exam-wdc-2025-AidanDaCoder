@@ -76,7 +76,6 @@ app.get('/api/walkers/summary', async (req, res) => {
     let connection;
     try {
         connection = await getConnection();
-        // This query calculates completed walks and rating summaries for each walker.
         const query = `
             SELECT
                 u.username AS walker_username,
@@ -97,8 +96,7 @@ app.get('/api/walkers/summary', async (req, res) => {
             ORDER BY u.username;
         `;
         const [results] = await connection.query(query);
-        // Ensure average_rating is null if total_ratings is 0, not "0.0000" or similar
-        const formattedResults = results.map(walker => ({
+        const formattedResults = results.map(walker ()=> ({
             ...walker,
             completed_walks: Number(walker.completed_walks), // Ensure it's a number
             total_ratings: Number(walker.total_ratings), // Ensure it's a number
