@@ -255,7 +255,7 @@ app.get('/api/users/me', ensureAuthenticated, async (req, res) => {
 app.get('/api/dogs', async (req, res) => {
     let connection;
     try {
-        connection = await getDBConnection(); // change in this from getConnection to getDBConnection
+        connection = await getDbConnection(); // change in this from getConnection to getDBConnection
         const query = `
             SELECT
                 d.dog_id,
