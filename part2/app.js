@@ -31,7 +31,6 @@ app.use(cookieParser()); // for parsing cookies
 app.use(session({
     secret: process.env.SESSION_SECRET || 'dog',
     resave: false,
-    saveUninitialized: true, // sets to true to store session on first request
     cookie: {
         secure: process.env.NODE_ENV === 'production', // secure cookies in production
         httpOnly: true,
@@ -39,8 +38,8 @@ app.use(session({
     }
 }));
 
-//serve static files from the 'public' directory
-app
+// --- Database Connection Pool ---
+let dbPool; // Declare globally within this module
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
