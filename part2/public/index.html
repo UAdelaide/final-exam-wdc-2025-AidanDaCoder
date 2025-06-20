@@ -11,6 +11,7 @@
 
   <div id="app" class="container py-5">
     <h1 class="mb-4 text-primary">{{ message }}</h1>
+
       <form id="loginForm" method="POST" action="/login">
             <div>
                 <label for="username">Username</label>
@@ -19,7 +20,13 @@
             <div class="password-wrapper">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" value="●●●●●●●●●●●●●●●" required>
-
+  </div>
+            <button type="submit">Log In</button>
+        </form>
+        <div id="errorMessage" class="error-message">
+            <!-- Error messages will be shown here by the server if login fails -->
+        </div>
+    </div>
 
 
     <!-- <p class="lead">Connect with trusted walkers for your beloved dog!</p> -->
