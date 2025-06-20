@@ -167,7 +167,13 @@
             isLoadingDogs.value = false;
           }
         }
-      },
+
+
+       onMounted(() => {
+          displayLoginError();
+          loadDogsAndPictures();
+        });
+
       // data() {
       //   return {
       //     message: 'Welcome to the Dog Walking Service!'
