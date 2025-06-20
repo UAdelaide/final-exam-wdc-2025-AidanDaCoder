@@ -28,7 +28,16 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 app.use(cookieParser()); // for parsing cookies
 
 //session configuration
-
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'a_very_strong_part2_secret_key', // CHANGE THIS!
+    resave: false,
+    saveUninitialized: true, // Set to true to store session on first request, useful for flashing messages
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production if using HTTPS
+        httpOnly: true,
+        maxAge: 100000// Cookie valid for 1 day (milliseconds)
+    }
+}));
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
