@@ -31,9 +31,9 @@ app.use(cookieParser()); // for parsing cookies
 app.use(session({
     secret: process.env.SESSION_SECRET || 'a_very_strong_part2_secret_key', // CHANGE THIS!
     resave: false,
-    saveUninitialized: true, // Set to true to store session on first request, useful for flashing messages
+    saveUninitialized: true, // sets to true to store session on first request
     cookie: {
-        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production if using HTTPS
+        secure: process.env.NODE_ENV === 'production', // secure cookies
         httpOnly: true,
         maxAge: 100000000 // cookie valid for a time of 100 million milliseconds
     }
