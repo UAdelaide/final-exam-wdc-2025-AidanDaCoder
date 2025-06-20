@@ -107,6 +107,8 @@
         const walks = ref([]);
         const message = ref('');
         const error = ref('');
+        // store owner's dogs
+        const ownerDogs = ref([]);
 
         async function loadWalks() {
           try {
