@@ -175,14 +175,14 @@
       // },
 
       //added client-side script in Vue script to display error messages passed through URL query parameters
-      mounted() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const error = urlParams.get('error');
-        const errorMessageDiv = document.getElementById('errorMessage');
-        if (error && errorMessageDiv) {
-          errorMessageDiv.textContent = decodeURIComponent(error);
-        }
-      }
+      // mounted() {
+      //   const urlParams = new URLSearchParams(window.location.search);
+      //   const error = urlParams.get('error');
+      //   const errorMessageDiv = document.getElementById('errorMessage');
+      //   if (error && errorMessageDiv) {
+      //     errorMessageDiv.textContent = decodeURIComponent(error);
+      //   }
+      // }
     }).mount('#app');
 
   </script>
