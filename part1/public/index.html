@@ -27,9 +27,9 @@
     <div id="app">
         <h1>Dog o da Day!</h1>
         <div v-if="isLoading">Loading image...</div>
-        <img v-bind:src="dogImageUrl" v-bind:alt="altText" v-if="!isLoading && dogImageUrl">
+        <img  src="#" alt="" v-bind:src="dogImageUrl" v-bind:alt="altText" v-if="!isLoading && dogImageUrl">
         <div class="dog-info" v-if="!isLoading">
-            <p>Name: {{ dogName }} <span class="status-dot" :style="{ backgroundColor: apiStatusColor }"></span></p>
+            <p>Name: {{ dogName }} <span class="status-dot" v-bind:style="{ backgroundColor: apiStatusColor }"></span></p>
             <p>Breed: {{ dogBreed }}</p>
         </div>
         <button type="button" @click="fetchDog" :disabled="isLoading">
