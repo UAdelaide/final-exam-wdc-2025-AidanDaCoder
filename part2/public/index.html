@@ -84,7 +84,7 @@
           message: 'Welcome to the Dog Walking Service!'
         };
       },
-      //added client-side script to display error messages passed through URL query parameters
+      //added client-side script in Vue script to display error messages passed through URL query parameters
       mounted() {
         const urlParams = new URLSearchParams(window.location.search);
         const error = urlParams.get('error');
