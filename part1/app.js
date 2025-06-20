@@ -96,7 +96,7 @@ app.get('/api/walkers/summary', async (req, res) => {
             ORDER BY u.username;
         `;
         const [results] = await connection.query(query);
-        const formattedResults = results.map(walker => ({
+        const formattedResults = results.map((walker) => ({
             ...walker,
             completed_walks: Number(walker.completed_walks),
             total_ratings: Number(walker.total_ratings),
@@ -106,8 +106,8 @@ app.get('/api/walkers/summary', async (req, res) => {
         res.json(formattedResults);
     } catch (error)
     {
-        console.error("Error fetching walkers summary:", error);
-        res.status(500).json({ error: "Failed to retrieve walkers summary", details: error.message });
+        console.error("error fetching walkers summary:", error);
+        res.status(500).json({ error: "failed to retrieve walkers summary", details: error.message });
     } finally {
         if (connection) connection.release();
     }
