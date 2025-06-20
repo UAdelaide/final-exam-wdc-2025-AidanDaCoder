@@ -98,10 +98,10 @@ app.get('/api/walkers/summary', async (req, res) => {
         const [results] = await connection.query(query);
         const formattedResults = results.map(walker => ({
             ...walker,
-            completed_walks: Number(walker.completed_walks), // Ensure it's a number
-            total_ratings: Number(walker.total_ratings), // Ensure it's a number
-            average_rating: walker.total_ratings > 0 ?
-            parseFloat(parseFloat(walker.average_rating).toFixed(2)) : null
+            completed_walks: Number(walker.completed_walks),
+            total_ratings: Number(walker.total_ratings),
+            average_rating: walker.total_ratings > 0
+            ? parseFloat(parseFloat(walker.average_rating).toFixed(2)) : null
         }));
         res.json(formattedResults);
     } catch (error)
