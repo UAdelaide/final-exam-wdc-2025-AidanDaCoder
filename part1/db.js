@@ -6,7 +6,7 @@ import 'dotenv/config';
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'test',
-    password: process.env.DB_PASSWORD || '123',
+    password: process.env.DB_PASSWORD || '',
     database: process.env.DB_DATABASE || 'DogWalkService',
     waitForConnections: true,
     connectionLimit: 10,
@@ -27,12 +27,12 @@ async function initialiseDatabase() {
             multipleStatements: true
         });
         connection = await tempPool.getConnection();
-        console.log('Connected to MySQL server.');
+        console.log('connected to MySQL server.');
 
         const sqlFilePath = path.join(process.cwd(), 'dogwalks.sql');
         const sqlScript = await fs.readFile(sqlFilePath, 'utf-8');
 
-        const statements = sqlScript.split(';\n').map(stmt => stmt.trim()).filter(stmt => stmt.length > 0);
+        const statements = sqlScript.split(';\n').map((stmt) => stmt.trim()).filter((stmt) => stmt.length > 0);
 
         for (const statement of statements) {
             if (statement.startsWith('--') || statement.startsWith('/*')) {
