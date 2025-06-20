@@ -91,9 +91,25 @@ async function initialiseDatabaseAndPool() {
     }
 }
 
+// helper to get connection
+async function getDbConnection() {
+    if (!dbPool) {
+        throw new Error("Database pool not initialized. Call initializeDatabaseAndPool first.");
+    }
+    return dbPool.getConnection();
+}
+
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
+
+// middleware to check if user is authenticated
+function ensureAuthenticated(req, res, next) {
+    if (req.session.user) {
+        return next();
+    }
+    res.redirect('/?error=' + encodeURIComponent('Please log in to access that page.'));
+}
 
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
