@@ -63,7 +63,7 @@ let dbPool;
     dbPool = mysql.createPool({
       host: process.env.DB_HOST || 'localhost',
       user: process.env.DB_USER || 'root',
-      password: process.env.DB_PASSWORD || '123',
+      password: process.env.DB_PASSWORD || '',
       database: process.env.DB_DATABASE || 'DogWalkService',
       waitForConnections: true,
       connectionLimit: 10,
@@ -86,7 +86,7 @@ let dbPool;
 
 async function getConnection() {
     if (!dbPool) {
-        throw new Error("Database pool is not initialized yet.");
+        throw new Error("database pool is not initialized yet.");
     }
     return dbPool.getConnection();
 }
