@@ -73,8 +73,40 @@
     <div id="errorMessage" class="error-message">
       <!-- Server-side errors will appear here via client-side script -->
     </div>
+ <h2>All Registered Dogs</h2>
+      <div v-if="isLoadingDogs" class="alert alert-info">Loading dogs and their pictures...</div>
+      <div v-if="dogFetchError" class="alert alert-danger">{{ dogFetchError }}</div>
 
-    
+      <div v-if="!isLoadingDogs && dogsWithPictures.length === 0 && !dogFetchError" class="alert alert-secondary">
+        No dogs are currently listed in our database.
+      </div>
+
+      <div v-if="!isLoadingDogs && dogsWithPictures.length > 0" class="table-responsive"> <!-- Added for responsiveness -->
+        <table class="table dog-table">
+          <thead>
+            <tr>
+              <th class="col-dog-id">Dog ID</th>
+              <th class="col-name">Name</th>
+              <th class="col-size">Size</th>
+              <th class="col-owner-id">Owner ID</th>
+              <th class="col-photo">Photo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="dog in dogsWithPictures" :key="dog.dog_id"> <!-- Use dog.dog_id from DB as key -->
+              <td>{{ dog.dog_id }}</td>
+              <td>{{ dog.dog_name }}</td>
+              <td class="text-capitalize">{{ dog.size }}</td>
+              <td>{{ dog.owner_id }}</td>
+              <td>
+                <img v-if="dog.imageUrl" :src="dog.imageUrl" :alt="'Photo of ' + dog.dog_name">
+                <div v-else class="placeholder-img-table">No Pic</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
   </div>
 
   <script>
