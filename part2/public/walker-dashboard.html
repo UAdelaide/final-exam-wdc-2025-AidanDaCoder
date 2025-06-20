@@ -105,7 +105,7 @@
             const res = await fetch(`/api/walks/${requestId}/apply`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ walker_id: user })
+              // body: JSON.stringify({ walker_id: user })
             });
             const result = await res.json();
 
@@ -130,7 +130,7 @@
           } else {
             // if user couldn't be fetched, don't bother loading walks
             loadingWalks.value = false;
-            if(!error.value) { 
+            if(!error.value) {
                 error.value = "Could not verify user. Unable to load walks or apply.";
             }
           }
