@@ -8,7 +8,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 //added ability to connect to MYSQL using promises
 var mysql = require('mysql2/promise');
-//
+//added promise file system methods
 var fs = require('fs/promises');
 var session = require('express-session');
 
