@@ -216,4 +216,4 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 
-module.exports = app;
+// module.exports = app;
