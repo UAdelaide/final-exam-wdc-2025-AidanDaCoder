@@ -127,6 +127,7 @@ function ensureWalker(req, res, next) {
     res.status(403).send('Forbidden: Walkers only.');
 }
 
+// route to serve login page or redirect to corresponding dashboard
 app.get('/', (req, res) => {
     if (req.session.user) {
         if (req.session.user.role === 'owner') {
