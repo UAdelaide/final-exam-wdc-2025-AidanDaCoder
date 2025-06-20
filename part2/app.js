@@ -187,6 +187,12 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Owner Dashboard
+app.get('/owner-dashboard', ensureAuthenticated, ensureOwner, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'owner-dashboard.html'));
+});
+
+
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 
