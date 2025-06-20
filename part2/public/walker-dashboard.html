@@ -101,10 +101,13 @@
         }
 
         async function applyToWalk(requestId) {
+           message.value = ''; // Clear previous messages
+          error.value = '';
+
           try {
             if (!currentUser.value || !currentUser.value.id) {
               error.value = 'Cannot apply: User details not available. Please refresh.';
-              return; // Stop if no current user ID
+              return;
             }
             applying[requestId] = true;
             const res = await fetch(`/api/walks/${requestId}/apply`, {
