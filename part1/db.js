@@ -17,6 +17,14 @@ const pool = mysql.createPool({
 async function initialiseDatabase() {
     let connection;
     try {
-        const tempPool = mysql.createPool
+        const tempPool = mysql.createPool({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            waitForConnections: true,
+            connectionLimit: 1,
+            queueLimit: 0,
+            multipleStatements: true
+        })
     }
 }
