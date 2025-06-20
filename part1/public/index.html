@@ -30,7 +30,7 @@
         <img src="dogImageUrl" alt="altText" v-if="!isLoading && dogImageUrl">
         <div class="dog-info" v-if="!isLoading">
             <p>Name: {{ dogName }} <span class="status-dot" :style="{ backgroundColor: apiStatusColor }"></span></p>
-            <p>Colour: {{ dogColour }}</p>
+            <p>Breed: {{ dogBreed }}</p>
         </div>
         <button type="button" @click="fetchDog" :disabled="isLoading">
             {{ isLoading ? '...' : 'New Dog' }}
@@ -49,7 +49,7 @@
                 const altText = ref('A dog picture'); // Accessibility: generic initial alt text
                 const isLoading = ref(true);
                 const dogName = ref('Fido');
-                const dogColour = ref('Good Boi');
+                const dogBreed = ref('Good Boi');
                 const apiError = ref(false);
 
                 const fetchDog = async () => {
@@ -57,12 +57,12 @@
                     apiError.value = false;
                     altText.value = 'Loading new dog picture...';
                     try {
-                        const response = await fetch('https://dog.ceo/api/Colours/image/random');
+                        const response = await fetch('https://dog.ceo/api/breeds/image/random');
                         const data = await response.json();
                         if (data.status === 'success') {
                             dogImageUrl.value = data.message;
-                            const ColourFromUrl = data.message.match(/Colours\/([a-zA-Z0-9-]+)\//);
-                            altText.value = ColourFromUrl ? `A ${ColourFromUrl[1].replace('-', ' ')} dog` : 'A randomly fetched dog picture';
+                            const breedFromUrl = data.message.match(/breeds\/([a-zA-Z0-9-]+)\//);
+                            altText.value = breedFromUrl ? `A ${breedFromUrl[1].replace('-', ' ')} dog` : 'A randomly fetched dog picture';
                         } else {
                             altText.value = 'Failed to load dog image.';
                             apiError.value = true;
@@ -87,7 +87,7 @@
                     altText,
                     isLoading,
                     dogName,
-                    dogColour,
+                    dogBreed,
                     fetchDog,
                     apiStatusColor
                 };
