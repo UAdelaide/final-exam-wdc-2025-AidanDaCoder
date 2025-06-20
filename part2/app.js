@@ -100,9 +100,6 @@ async function getDbConnection() {
 }
 
 // Routes
-const walkRoutes = require('./routes/walkRoutes');
-const userRoutes = require('./routes/userRoutes');
-
 // middleware to check if user is authenticated
 function ensureAuthenticated(req, res, next) {
     if (req.session.user) {
@@ -212,6 +209,8 @@ app.get('/logout', (req, res) => {
     });
 });
 
+const walkRoutes = require('./routes/walkRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
