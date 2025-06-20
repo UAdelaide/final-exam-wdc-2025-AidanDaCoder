@@ -17,7 +17,7 @@
             height: 300px;
         }
         button {
-            font-size: 0.1em; /* Kinematic: very small button text/target */
+            font-size: 0.5em; /* Kinematic: very small button text/target */
             cursor: crosshair; /* Cognitive: improper cursor for a button */
         }
 
@@ -35,7 +35,7 @@
         <button type="button" @click="fetchDog" :disabled="isLoading">
             {{ isLoading ? '...' : 'New Dog' }}
         </button>
-        <p
+        <p>
             Pics from Dog API. Details made up.
         </p>
     </div>
