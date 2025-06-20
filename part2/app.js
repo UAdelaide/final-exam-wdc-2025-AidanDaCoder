@@ -42,7 +42,55 @@ app.use(session({
 let dbPool; // declare globally within this module
 
 async function initialiseDatabaseAndPool() {
-    tr
+   try {
+        // this part is for running the SQL script to set up the DB
+        const tempPool = mysql.createPool({
+            host: process.env.DB_HOST || 'localhost',
+            user: process.env.DB_USER || 'root',
+            password: process.env.DB_PASSWORD || '', // Your MySQL password
+            waitForConnections: true,
+            connectionLimit: 1,
+            queueLimit: 0,
+            multipleStatements: true // To run the whole SQL script
+        });
+        const setupConnection = await tempPool.getConnection();
+        console.log('Connected to MySQL server for database setup (Part 2).');
+        // IMPORTANT: Update this path if your SQL file for Part 2 is named differently
+        const sqlFilePath = path.join(__dirname, 'dogwalks_part2.sql');
+        const sqlScript = await fs.readFile(sqlFilePath, 'utf-8');
+        const statements = sqlScript.split(';\n').map(stmt => stmt.trim()).filter(stmt => stmt.length > 0);
+        for (const statement of statements) {
+            if (statement.startsWith('--') || statement.startsWith('/*')) continue;
+            try { await setupConnection.query(statement); }
+            catch (err) {
+                if (['ER_DB_CREATE_EXISTS', 'ER_TABLE_EXISTS_ERROR', 'ER_DUP_ENTRY'].includes(err.code)) {
+                    // console.warn(`Setup/Seeding info (Part 2): ${err.message}`);
+                } else {
+                    console.error(`Error in SQL (Part 2): ${statement.substring(0,100)}...`, err.message);
+                    throw err; // Critical error during setup
+                }
+            }
+        }
+        console.log('Database schema and seed data for Part 2 applied.');
+        await setupConnection.release();
+        await tempPool.end();
+
+        // Now create the main pool for the application
+        dbPool = mysql.createPool({
+            host: process.env.DB_HOST || 'localhost',
+            user: process.env.DB_USER || 'root',
+            password: process.env.DB_PASSWORD || '', // Your MySQL password
+            database: process.env.DB_DATABASE_P2 || 'DogWalkServiceP2', // Use a specific DB for Part 2
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0
+        });
+        console.log(`Connected to the ${process.env.DB_DATABASE_P2 || 'DogWalkServiceP2'} database.`);
+        return dbPool;
+    } catch (error) {
+        console.error('FATAL: Could not initialize database pool (Part 2):', error);
+        process.exit(1); // Exit if DB connection fails
+    }
 }
 
 // Routes
