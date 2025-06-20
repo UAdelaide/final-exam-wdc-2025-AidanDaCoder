@@ -101,9 +101,11 @@
         }
 
         async function applyToWalk(requestId) {
-           message.value = ''; // Clear previous messages
+          // clear previous messages and errors
+          message.value = '';
           error.value = '';
 
+          
           try {
             if (!currentUser.value || !currentUser.value.id) {
               error.value = 'Cannot apply: User details not available. Please refresh.';
