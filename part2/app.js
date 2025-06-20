@@ -41,7 +41,9 @@ app.use(session({
 // database connection pool
 let dbPool; // declare globally within this module
 
-
+async function initialiseDatabaseAndPool() {
+    tr
+}
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
