@@ -26,7 +26,7 @@ async function initialiseDatabase() {
             queueLimit: 0,
             multipleStatements: true
         });
-         connection = await tempPool.getConnection();
+        connection = await tempPool.getConnection();
         console.log('Connected to MySQL server.');
 
         const sqlFilePath = path.join(process.cwd(), 'dogwalks.sql');
@@ -35,5 +35,11 @@ async function initialiseDatabase() {
         const statements = sqlScript.split(';\n').map(stmt => stmt.trim()).filter(stmt => stmt.length > 0);
 
         for (const statement of statements) {
+            if (statement.startsWith('--') || statement.startsWith('/*')) {
+                continue;
+            }
+            try {
+                await connection.query(statement);
+        }
     }
 }
