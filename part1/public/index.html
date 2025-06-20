@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog o Day</title> <!-- Cognitive: Uninspired, slightly misspelled-sounding title -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Dog of the Day!</h1>
+        <div v-if="isLoading">Loading image...</div>
+        <img :src="dogImageUrl" :alt="altText" v-if="!isLoading && dogImageUrl">
+        <!-- Alt text will be poor initially -->
+        <div class="dog-info" v-if="!isLoading">
+            <p>Name: {{ dogName }} <span class="status-dot" :style="{ backgroundColor: apiStatusColor }"></span></p>
+            <p>Breed: {{ dogBreed }}</p>
+            <!-- Cognitive: Minimal, perhaps unengaging details -->
+        </div>
+        <button @click="fetchDog" :disabled="isLoading">
+            {{ isLoading ? '...' : 'New Dog' }}
+        </button>
+        <!-- Kinematic: Having to click a button for new content when some might expect auto-refresh or other interaction -->
+        <p style="font-size: 10px; color: #A0A0A0;"> <!-- Accessibility: Tiny, very low contrast text -->
+            Pics from Dog API. Details made up.
+        </p>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted, computed } = Vue;
+
+        createApp({
+            setup() {
+                const dogImageUrl = ref('');
+                const altText = ref('A dog picture'); // Accessibility: Generic initial alt text
+                const isLoading = ref(true);
+                const dogName = ref('Fido'); // Hardcoded
+                const dogBreed = ref('Good Boi'); // Hardcoded
+                const apiError = ref(false);
+
+                const fetchDog = async () => {
+                    isLoading.value = true;
+                    apiError.value = false;
+                    altText.value = 'Loading new dog picture...';
+                    try {
+                        const response = await fetch('https://dog.ceo/api/breeds/image/random');
+                        const data = await response.json();
+                        if (data.status === 'success') {
+                            dogImageUrl.value = data.message;
+                            // Attempt to get breed from URL for slightly better alt text
+                            const breedFromUrl = data.message.match(/breeds\/([a-zA-Z0-9-]+)\//);
+                            altText.value = breedFromUrl ? `A ${breedFromUrl[1].replace('-', ' ')} dog` : 'A randomly fetched dog picture';
+                        } else {
+                            altText.value = 'Failed to load dog image.';
+                            apiError.value = true;
+                        }
+                    } catch (error) {
+                        console.error("Fetch error:", error);
+                        altText.value = 'Error fetching dog image.';
+                        apiError.value = true;
+                    } finally {
+                        isLoading.value = false;
+                    }
+                };
+
+                const apiStatusColor = computed(() => {
+                    return apiError.value ? '#FF7043' : '#66BB6A'; // Orange-ish for error, Green for success
+                });
+
+                onMounted(fetchDog);
+
+                return {
+                    dogImageUrl,
+                    altText,
+                    isLoading,
+                    dogName,
+                    dogBreed,
+                    fetchDog,
+                    apiStatusColor
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
