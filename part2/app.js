@@ -250,6 +250,29 @@ app.get('/api/users/me', ensureAuthenticated, async (req, res) => {
     }
 });
 
+//question 17, exact same api get as part 1
+// /api/dogs
+app.get('/api/dogs', async (req, res) => {
+    let connection;
+    try {
+        connection = await getConnection();
+        const query = `
+            SELECT
+                d.name AS dog_name,
+                d.size,
+                u.username AS owner_username
+            FROM Dogs d
+            JOIN Users u ON d.owner_id = u.user_id;
+        `;
+        const [results] = await connection.query(query);
+        res.json(results);
+    } catch (error) {
+        console.error("error fetching dogs:", error);
+        res.status(500).json({ error: "failed to retrieve dogs", details: error.message });
+    } finally {
+        if (connection) connection.release();
+    }
+});
 // call initialise and then start listening since app.js is now the main entry point
 initialiseDatabaseAndPool().then(() => {
     app.listen(PORT, () => {
