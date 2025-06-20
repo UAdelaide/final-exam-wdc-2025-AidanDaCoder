@@ -155,10 +155,7 @@ app.post('/login', async (req, res) => {
 
         if (users.length > 0) {
             const user = users[0];
-            // VERY IMPORTANT: This is NOT secure. For demonstration only.
-            // In a real app, use bcrypt.compare(password, user.password_hash)
             if (password === user.password_hash) {
-                // Password matches
                 req.session.user = {
                     id: user.user_id,
                     username: user.username,
@@ -170,16 +167,13 @@ app.post('/login', async (req, res) => {
                 } else if (user.role === 'walker') {
                     res.redirect('/walker-dashboard');
                 } else {
-                    // Should not happen if roles are correctly defined
                     res.redirect('/?error=' + encodeURIComponent('Login successful, but role unknown.'));
                 }
             } else {
-                // Password does not match
                 console.log(`Failed login attempt for user: ${username} (incorrect password)`);
                 res.redirect('/?error=' + encodeURIComponent('Invalid username or password.') + '&username=' + encodeURIComponent(username));
             }
         } else {
-            // User not found
             console.log(`Failed login attempt for user: ${username} (user not found)`);
             res.redirect('/?error=' + encodeURIComponent('Invalid username or password.') + '&username=' + encodeURIComponent(username));
         }
@@ -196,5 +190,4 @@ app.post('/login', async (req, res) => {
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 
-// Export the app instead of listening here
 module.exports = app;
