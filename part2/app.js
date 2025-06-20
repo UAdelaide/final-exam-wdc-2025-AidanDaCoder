@@ -256,7 +256,7 @@ app.get('/api/dogs', async (req, res) => {
     let connection;
     try {
         connection = await getDbConnection(); // changed this from getConnection to getDBConnection to match the part 2 function name
-        // added dog id, owner id 
+        // added dog id, owner id and ordering by the dog id as this part needs that information displayed in the table
         const query = `
             SELECT
                 d.dog_id,
