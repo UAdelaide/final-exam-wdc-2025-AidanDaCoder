@@ -119,9 +119,23 @@
           }
         }
 
-        onMounted(() => {
-          loadWalkRequests();
+
+        // changed onMounted with asynchronous
+         onMounted(async () => {
+          // fetches user details first, then walk requests
+          await getCurrentUser();
+          // only load walks if user details were successfully fetched (or decide on different logic)
+          if (currentUser.value) {
+             await loadWalkRequests();
+          } else {
+            // If user couldn't be fetched, don't bother loading walks that require user context for applying
+            loadingWalks.value = false; // Stop showing "loading walks"
+            if(!error.value) { // If getCurrentUser didn't already set an error
+                error.value = "Could not verify user. Unable to load walks or apply.";
+            }
+          }
         });
+
 
         return {
           walks,
