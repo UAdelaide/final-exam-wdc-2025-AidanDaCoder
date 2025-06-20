@@ -133,6 +133,8 @@ app.get('/', (req, res) => {
             return res.redirect('/owner-dashboard');
         } else if (req.session.user.role === 'walker') {
          return res.redirect('/walker-dashboard');
+        } else {
+            console.error('error with logging in');
         }
     }
     // If not logged in, or role is unknown (shouldn't happen with proper login)
