@@ -69,7 +69,7 @@
         // new function to get current user details
         async function getCurrentUser() {
           loadingUser.value = true;
-          error.value = ''; // Clear previous errors
+          error.value = '';
           try {
             const res = await fetch('/api/users/me');
             if (!res.ok) {
@@ -80,15 +80,10 @@
             if (!currentUser.value || !currentUser.value.id) {
                 throw new Error('User ID not found in response from /api/users/me');
             }
-            // console.log('Current user:', currentUser.value);
           } catch (err) {
             console.error("Error in getCurrentUser:", err);
-            error.value = err.message; // Display this error
-            currentUser.value = null; // Ensure currentUser is null on error
-            // Potentially redirect to login if auth fails:
-            // if (err.message.includes('logged out') || err.message.includes('Not authenticated')) {
-            //   window.location.href = '/?error=Session expired. Please log in again.';
-            // }
+            error.value = err.message;
+            currentUser.value = null;
           } finally {
             loadingUser.value = false;
           }
