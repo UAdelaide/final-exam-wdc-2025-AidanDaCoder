@@ -111,7 +111,8 @@
       </div>
 
   <script>
-    const { createApp } = Vue;
+   // Destructure ref and onMounted from Vue
+    const { createApp, ref, onMounted } = Vue;
     createApp({
        setup() {
         const dogsWithPictures = ref([]);
