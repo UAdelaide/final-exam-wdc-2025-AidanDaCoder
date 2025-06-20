@@ -140,6 +140,58 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// login POST route
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.redirect('/?error=' + encodeURIComponent('Username and password are required.'));
+    }
+
+    let connection;
+    try {
+        connection = await getDbConnection();
+        const [users] = await connection.query('SELECT * FROM Users WHERE username = ?', [username]);
+
+        if (users.length > 0) {
+            const user = users[0];
+            // VERY IMPORTANT: This is NOT secure. For demonstration only.
+            // In a real app, use bcrypt.compare(password, user.password_hash)
+            if (password === user.password_hash) {
+                // Password matches
+                req.session.user = {
+                    id: user.user_id,
+                    username: user.username,
+                    role: user.role
+                };
+                console.log(`User ${user.username} (${user.role}) logged in successfully.`);
+                if (user.role === 'owner') {
+                    res.redirect('/owner-dashboard');
+                } else if (user.role === 'walker') {
+                    res.redirect('/walker-dashboard');
+                } else {
+                    // Should not happen if roles are correctly defined
+                    res.redirect('/?error=' + encodeURIComponent('Login successful, but role unknown.'));
+                }
+            } else {
+                // Password does not match
+                console.log(`Failed login attempt for user: ${username} (incorrect password)`);
+                res.redirect('/?error=' + encodeURIComponent('Invalid username or password.') + '&username=' + encodeURIComponent(username));
+            }
+        } else {
+            // User not found
+            console.log(`Failed login attempt for user: ${username} (user not found)`);
+            res.redirect('/?error=' + encodeURIComponent('Invalid username or password.') + '&username=' + encodeURIComponent(username));
+        }
+    } catch (error) {
+        console.error('Login process error:', error);
+        res.redirect('/?error=' + encodeURIComponent('An error occurred. Please try again.'));
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
+});
 
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
