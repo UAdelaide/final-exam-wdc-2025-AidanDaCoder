@@ -70,7 +70,7 @@ async function initialiseDatabaseAndPool() {
                 }
             }
         }
-        console.log('Database schema and seed data for Part 2 applied.');
+        console.log('database schema and seed data successful');
         await setupConnection.release();
         await tempPool.end();
 
