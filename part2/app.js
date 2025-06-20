@@ -54,7 +54,7 @@ async function initialiseDatabaseAndPool() {
             multipleStatements: true
         });
         const setupConnection = await tempPool.getConnection();
-        console.log('Connected to MySQL server for database setup (Part 2).');
+        console.log('Connected to MySQL server for database setup');
         const sqlFilePath = path.join(__dirname, 'dogwalks_part2.sql');
         const sqlScript = await fs.readFile(sqlFilePath, 'utf-8');
         const statements = sqlScript.split(';\n').map(stmt => stmt.trim()).filter(stmt => stmt.length > 0);
