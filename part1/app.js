@@ -5,8 +5,8 @@ var logger = require('morgan');
 import 'dotenv/config';
 import { pool, initializeDatabase, getConnection } from './db.js';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -63,8 +63,8 @@ app.get('/api/walkrequests/open', async (req, res) => {
         const [results] = await connection.query(query);
         res.json(results);
     } catch (error) {
-        console.error("Error fetching open walk requests:", error);
-        res.status(500).json({ error: "Failed to retrieve open walk requests", details: error.message });
+        console.error("error fetching open walk requests:", error);
+        res.status(500).json({ error: "failed to retrieve open walk requests", details: error.message });
     } finally {
         if (connection) connection.release();
     }
