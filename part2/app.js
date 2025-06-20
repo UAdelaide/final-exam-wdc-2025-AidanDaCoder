@@ -250,12 +250,12 @@ app.get('/api/users/me', ensureAuthenticated, async (req, res) => {
     }
 });
 
-//question 17, exact same /api/dogs get as part 1
+//question 17, exact same /api/dogs get as part 1 with minor changes
 // /api/dogs
 app.get('/api/dogs', async (req, res) => {
     let connection;
     try {
-        connection = await getDbConnection(); // change in this from getConnection to getDBConnection
+        connection = await getDbConnection(); // changed this from getConnection to getDBConnection to match the part 2 function
         const query = `
             SELECT
                 d.dog_id,
