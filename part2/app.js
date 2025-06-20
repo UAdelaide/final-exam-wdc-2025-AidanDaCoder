@@ -94,7 +94,7 @@ async function initialiseDatabaseAndPool() {
 // helper to get connection
 async function getDbConnection() {
     if (!dbPool) {
-        throw new Error("Database pool not initialized. Call initializeDatabaseAndPool first.");
+        throw new Error("Database pool not initialized. Call initialiseDatabaseAndPool first.");
     }
     return dbPool.getConnection();
 }
