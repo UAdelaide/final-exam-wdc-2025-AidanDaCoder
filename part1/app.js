@@ -1,25 +1,118 @@
+// app.js
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-import 'dotenv/config';
-import { pool, initializeDatabase, getConnection } from './db.js';
+var mysql = require('mysql2/promise'); // Using mysql2/promise for async/await
+var fs = require('fs/promises'); // For reading the SQL file
 
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
+require('dotenv').config(); // Load .env variables
 
 var app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// Static files (if any, though not strictly required by the prompt)
+// app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+let dbPool; // This will be our connection pool
 
-// api/dogs
+// Async IIFE for database setup
+(async () => {
+  let connectionForSetup;
+  try {
+    // 1. Connect to MySQL server (without specifying a database to create it)
+    const tempPool = mysql.createPool({
+        host: process.env.DB_HOST || 'localhost',
+        user: process.env.DB_USER || 'root', // Replace with your default if needed
+        password: process.env.DB_PASSWORD || '', // Replace with your default if needed
+        waitForConnections: true,
+        connectionLimit: 1, // Just need one for setup
+        queueLimit: 0,
+        multipleStatements: true // Essential for running the .sql file
+    });
+    connectionForSetup = await tempPool.getConnection();
+    console.log('Connected to MySQL server for database setup.');
+
+    // 2. Read the dogwalks.sql file
+    const sqlFilePath = path.join(__dirname, 'dogwalks.sql'); // Assumes dogwalks.sql is in the same directory as app.js
+    const sqlScript = await fs.readFile(sqlFilePath, 'utf-8');
+
+    // 3. Execute the SQL script (creates database, tables, and inserts data)
+    // Splitting the script into individual statements is more robust
+    const statements = sqlScript.split(';\n').map(stmt => stmt.trim()).filter(stmt => stmt.length > 0);
+    for (const statement of statements) {
+        if (statement.startsWith('--') || statement.startsWith('/*')) {
+            continue; // Skip comments
+        }
+        try {
+            await connectionForSetup.query(statement);
+            // console.log(`Executed: ${statement.substring(0, 50)}...`);
+        } catch (err) {
+            // Gracefully handle "database exists", "table exists", or "duplicate entry" errors during setup/seeding
+            if (err.code === 'ER_DB_CREATE_EXISTS' || err.code === 'ER_TABLE_EXISTS_ERROR') {
+                // console.warn(`Setup warning: ${err.message}`);
+            } else if (err.code === 'ER_DUP_ENTRY' && statement.toUpperCase().startsWith('INSERT')) {
+                // console.warn(`Seeding warning: Duplicate entry skipped for: ${statement.substring(0, 50)}...`);
+            } else {
+                console.error(`Error executing SQL statement: ${statement.substring(0, 100)}...`);
+                console.error('SQL Error:', err.message);
+                // For a critical setup error, you might want to re-throw or exit
+                // throw err; // Or handle more gracefully
+            }
+        }
+    }
+    console.log('Database schema created and data seeded successfully (or already existed/seeded).');
+    await tempPool.end(); // Close the temporary setup pool
+    connectionForSetup = null; // Clear the connection variable
+
+
+    // 4. Create the main connection pool for the application to the specific database
+    dbPool = mysql.createPool({
+      host: process.env.DB_HOST || 'localhost',
+      user: process.env.DB_USER || 'root',
+      password: process.env.DB_PASSWORD || '',
+      database: process.env.DB_DATABASE || 'DogWalkService', // Database name from your .env or default
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0
+    });
+
+    console.log(`Connected to the ${process.env.DB_DATABASE || 'DogWalkService'} database for application use.`);
+
+    // If your start script is `node app.js`, start listening here.
+    // If `bin/www` is used, this listen call would be there.
+    // For exam simplicity, let's assume `node app.js` is the start.
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+        console.log('Available routes:');
+        console.log(`  GET http://localhost:${PORT}/api/dogs`);
+        console.log(`  GET http://localhost:${PORT}/api/walkrequests/open`);
+        console.log(`  GET http://localhost:${PORT}/api/walkers/summary`);
+    });
+
+  } catch (err) {
+    console.error('FATAL: Error during database setup or initial connection. Ensure MySQL is running and accessible.', err);
+    if (connectionForSetup) await connectionForSetup.release(); // Ensure release if error occurred mid-setup
+    process.exit(1); // Exit if DB setup fails critically
+  }
+})();
+
+
+// --- API ROUTES ---
+
+// Helper function to get a connection from the pool
+async function getConnection() {
+    if (!dbPool) {
+        throw new Error("Database pool is not initialized yet.");
+    }
+    return dbPool.getConnection();
+}
+
+// /api/dogs
 app.get('/api/dogs', async (req, res) => {
     let connection;
     try {
@@ -35,14 +128,14 @@ app.get('/api/dogs', async (req, res) => {
         const [results] = await connection.query(query);
         res.json(results);
     } catch (error) {
-        console.error("error fetching dogs:", error);
-        res.status(500).json({ error: "failed to retrieve dogs", details: error.message });
+        console.error("Error fetching dogs:", error);
+        res.status(500).json({ error: "Failed to retrieve dogs", details: error.message });
     } finally {
         if (connection) connection.release();
     }
 });
 
-// api/walkrequests/open
+// /api/walkrequests/open
 app.get('/api/walkrequests/open', async (req, res) => {
     let connection;
     try {
@@ -63,13 +156,12 @@ app.get('/api/walkrequests/open', async (req, res) => {
         const [results] = await connection.query(query);
         res.json(results);
     } catch (error) {
-        console.error("error fetching open walk requests:", error);
-        res.status(500).json({ error: "failed to retrieve open walk requests", details: error.message });
+        console.error("Error fetching open walk requests:", error);
+        res.status(500).json({ error: "Failed to retrieve open walk requests", details: error.message });
     } finally {
         if (connection) connection.release();
     }
 });
-
 
 // /api/walkers/summary
 app.get('/api/walkers/summary', async (req, res) => {
@@ -96,37 +188,17 @@ app.get('/api/walkers/summary', async (req, res) => {
             ORDER BY u.username;
         `;
         const [results] = await connection.query(query);
-        const formattedResults = results.map((walker) => ({
+        const formattedResults = results.map(walker => ({
             ...walker,
             completed_walks: Number(walker.completed_walks),
             total_ratings: Number(walker.total_ratings),
-            average_rating: walker.total_ratings > 0
-            ? parseFloat(parseFloat(walker.average_rating).toFixed(2)) : null
+            average_rating: walker.total_ratings > 0 ? parseFloat(parseFloat(walker.average_rating).toFixed(2)) : null
         }));
         res.json(formattedResults);
-    } catch (error)
-    {
-        console.error("error fetching walkers summary:", error);
-        res.status(500).json({ error: "failed to retrieve walkers summary", details: error.message });
+    } catch (error) {
+        console.error("Error fetching walkers summary:", error);
+        res.status(500).json({ error: "Failed to retrieve walkers summary", details: error.message });
     } finally {
         if (connection) connection.release();
     }
 });
-
-async function startServer() {
-    try {
-        await initializeDatabase();
-        app.listen(PORT, () => {
-            console.log(`  GET http://localhost:${PORT}/api/dogs`);
-            console.log(`  GET http://localhost:${PORT}/api/walkrequests/open`);
-            console.log(`  GET http://localhost:${PORT}/api/walkers/summary`);
-        });
-    } catch (error) {
-        console.error("could not start server:", error);
-        process.exit(1);
-    }
-}
-
-startServer();
-
-export default app;
