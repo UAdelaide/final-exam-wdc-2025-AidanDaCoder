@@ -55,11 +55,15 @@ async function initialiseDatabase() {
         console.log('successfully created database schema');
         await tempPool.end();
 
-        } catch (error) {
+    } catch (error) {
         console.error('Failed to initialize database:', error);
         process.exit(1);
-        } finally {
-            if (connection) connection.release();
-        }
-        
+    } finally {
+        if (connection) connection.release();
+    }
+
+}
+
+async functiongetCOnnection() {
+    
 }
