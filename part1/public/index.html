@@ -26,11 +26,12 @@
         button:focus {
             outline: none; /* Accessibility: Removed focus indicator */
         }
+
     </style>
 </head>
 <body>
     <div id="app">
-        <h1>Dog of the Day!</h1>
+        <h1>Dog o da Day!</h1>
         <div v-if="isLoading">Loading image...</div>
         <img :src="dogImageUrl" :alt="altText" v-if="!isLoading && dogImageUrl">
         <!-- Alt text will be poor initially -->
