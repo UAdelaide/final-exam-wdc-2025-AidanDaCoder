@@ -2,7 +2,13 @@ const express = require('express');
 const path = require('path');
 require('dotenv').config();
 
-//added 
+//added required 
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var mysql = require('mysql2/promise');
+var fs = require('fs/promises');
+var session = require('express-session');
+
 const app = express();
 
 // Middleware
