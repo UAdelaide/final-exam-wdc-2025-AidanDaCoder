@@ -87,7 +87,7 @@ async function initialiseDatabaseAndPool() {
         return dbPool;
     } catch (error) {
         console.error('Could not initialise database pool', error);
-        process.exit(1); // Exit if DB connection fails
+        process.exit(1); // exits if DB connection fails
     }
 }
 
