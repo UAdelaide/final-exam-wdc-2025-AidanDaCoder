@@ -21,11 +21,14 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
 
-// added middleware
+// added middleware setup
 pp.use(logger('dev')); // for logging HTTP requests
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded (login form)
 app.use(cookieParser()); // for parsing cookies
+
+//session configuration
+
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
