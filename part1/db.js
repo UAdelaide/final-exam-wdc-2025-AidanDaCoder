@@ -42,9 +42,9 @@ async function initialiseDatabase() {
                 await connection.query(statement);
             } catch (err) {
                 if (err.code === 'ER_DB_CREATE_EXISTS' || err.code === 'ER_TABLE_EXISTS_ERROR') {
-                    console.warn(`Warning during setu`);
+                    console.warn(`warning during setup`);
                 } else if (err.code === 'ER_DUP_ENTRY' && statement.toUpperCase().startsWith('INSERT')) {
-                    console.warn(`Warning: Duplicate entry skipped for statement.`);
+                    console.warn(`warning: Duplicate entry skipped for statement`);
                 }
                 else {
                     console.error
