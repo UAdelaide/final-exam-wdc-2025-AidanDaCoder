@@ -3,10 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mysql = require('mysql2/promise'); // Using mysql2/promise for async/await
-var fs = require('fs/promises'); // For reading the SQL file
+var mysql = require('mysql2/promise');
+var fs = require('fs/promises');
 
-require('dotenv').config(); // Load .env variables
+require('dotenv').config();
 
 var app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,13 +18,11 @@ app.use(cookieParser());
 // Static files (if any, though not strictly required by the prompt)
 // app.use(express.static(path.join(__dirname, 'public')));
 
-let dbPool; // This will be our connection pool
+let dbPool;
 
-// Async IIFE for database setup
 (async () => {
   let connectionForSetup;
   try {
-    // 1. Connect to MySQL server (without specifying a database to create it)
     const tempPool = mysql.createPool({
         host: process.env.DB_HOST || 'localhost',
         user: process.env.DB_USER || 'root',
