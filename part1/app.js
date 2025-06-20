@@ -115,17 +115,15 @@ app.get('/api/walkers/summary', async (req, res) => {
 
 async function startServer() {
     try {
-        await initializeDatabase(); // Initialize and seed the database
+        await initializeDatabase();
         app.listen(PORT, () => {
-            console.log(`Server running on http://localhost:${PORT}`);
-            console.log('Available routes:');
             console.log(`  GET http://localhost:${PORT}/api/dogs`);
             console.log(`  GET http://localhost:${PORT}/api/walkrequests/open`);
             console.log(`  GET http://localhost:${PORT}/api/walkers/summary`);
         });
     } catch (error) {
         console.error("Could not start server:", error);
-        process.exit(1); // Exit if server can't start due to DB issues
+        process.exit(1);
     }
 }
 
