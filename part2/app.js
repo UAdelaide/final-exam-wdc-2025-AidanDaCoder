@@ -74,17 +74,17 @@ async function initialiseDatabaseAndPool() {
         await setupConnection.release();
         await tempPool.end();
 
-        // Now create the main pool for the application
+        // creates the main pool for the application
         dbPool = mysql.createPool({
             host: process.env.DB_HOST || 'localhost',
             user: process.env.DB_USER || 'root',
-            password: process.env.DB_PASSWORD || '', // Your MySQL password
-            database: process.env.DB_DATABASE_P2 || 'DogWalkServiceP2', // Use a specific DB for Part 2
+            password: process.env.DB_PASSWORD || '',
+            database: process.env.DB_DATABASE || 'DogWalkService',
             waitForConnections: true,
             connectionLimit: 10,
             queueLimit: 0
         });
-        console.log(`Connected to the ${process.env.DB_DATABASE_P2 || 'DogWalkServiceP2'} database.`);
+        console.log(`Connected to the ${process.env.DB_DATABASE_P2 || 'DogWalkService'} database.`);
         return dbPool;
     } catch (error) {
         console.error('FATAL: Could not initialize database pool (Part 2):', error);
