@@ -56,7 +56,7 @@ let dbPool; // This will be our connection pool
             if (err.code === 'ER_DB_CREATE_EXISTS' || err.code === 'ER_TABLE_EXISTS_ERROR') {
                 // console.warn(`Setup warning: ${err.message}`);
             } else if (err.code === 'ER_DUP_ENTRY' && statement.toUpperCase().startsWith('INSERT')) {
-                // console.warn(`Seeding warning: Duplicate entry skipped for: ${statement.substring(0, 50)}...`);
+                console.warn(;Seeding warning: Duplicate entry skipped');
             } else {
                 console.error('error executing SQL statement.');
                 console.error('SQL Error.');
