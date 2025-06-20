@@ -5,26 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dog o Day</title> <!-- Cognitive: Uninspired, slightly misspelled-sounding title -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <style>
-       
-    </style>
 </head>
 <body>
     <div id="app">
         <h1>Dog of the Day!</h1>
         <div v-if="isLoading">Loading image...</div>
         <img :src="dogImageUrl" :alt="altText" v-if="!isLoading && dogImageUrl">
-        <!-- Alt text will be poor initially -->
         <div class="dog-info" v-if="!isLoading">
             <p>Name: {{ dogName }} <span class="status-dot" :style="{ backgroundColor: apiStatusColor }"></span></p>
             <p>Breed: {{ dogBreed }}</p>
-            <!-- Cognitive: Minimal, perhaps unengaging details -->
         </div>
         <button @click="fetchDog" :disabled="isLoading">
             {{ isLoading ? '...' : 'New Dog' }}
         </button>
-        <!-- Kinematic: Having to click a button for new content when some might expect auto-refresh or other interaction -->
-        <p style="font-size: 10px; color: #A0A0A0;"> <!-- Accessibility: Tiny, very low contrast text -->
+        <p style="font-size: 10px; color: #A0A0A0;">
             Pics from Dog API. Details made up.
         </p>
     </div>
