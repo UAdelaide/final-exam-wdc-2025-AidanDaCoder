@@ -101,11 +101,9 @@
         }
 
         async function applyToWalk(requestId) {
-          // clear previous messages and errors
-          message.value = '';
+          // Clear previous messages and errors
+           message.value = '';
           error.value = '';
-
-          applying[requestId] = true; // set applying state for this button
 
           try {
             if (!currentUser.value || !currentUser.value.id) {
