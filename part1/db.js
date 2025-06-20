@@ -47,7 +47,7 @@ async function initialiseDatabase() {
                     console.warn(`warning duplicate entry skipped for statement`);
                 }
                 else {
-                    console.error(`error executing statement`)
+                    console.error(`error executing statement and SQL error`);
                 }
             }
         }
