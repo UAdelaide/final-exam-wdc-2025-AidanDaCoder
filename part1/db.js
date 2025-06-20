@@ -40,6 +40,8 @@ async function initialiseDatabase() {
             }
             try {
                 await connection.query(statement);
+            } catch (err) {
+                if (err.code === 'ER_DB_CREATE_EXISTS' || err.code === 'ER_TABLE_EXISTS_ERROR') {
         }
     }
 }
