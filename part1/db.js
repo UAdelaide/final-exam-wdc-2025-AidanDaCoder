@@ -31,5 +31,8 @@ async function initialiseDatabase() {
 
         const sqlFilePath = path.join(process.cwd(), 'dogwalks.sql');
         const sqlScript = await fs.readFile(sqlFilePath, 'utf-8');
+
+         const statements = sqlScript.split(';\n').map(stmt => stmt.trim()).filter(stmt => stmt.length > 0);
+
     }
 }
