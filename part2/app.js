@@ -238,20 +238,18 @@ app.get('/api/my-dogs', ensureAuthenticated, ensureOwner, async (req, res) => {
 
 //question 16,  new api endpoint to get current logged-in user's details
 app.get('/api/users/me', ensureAuthenticated, async (req, res) => {
-    // ensureAuthenticated already checks if req.session.user exists
+    // ensureAuthenticated checks if req.session.user exists or not
     if (req.session.user) {
-        // You can choose to return only the ID or more user details
-        // For this task, returning the ID is sufficient, but username and role can be useful.
         res.json({
             id: req.session.user.id,
             username: req.session.user.username,
             role: req.session.user.role
         });
     } else {
-        // This case should ideally not be reached if ensureAuthenticated works correctly
         res.status(401).json({ error: 'Not authenticated' });
     }
 });
+
 // call initialise and then start listening since app.js is now the main entry point
 initialiseDatabaseAndPool().then(() => {
     app.listen(PORT, () => {
