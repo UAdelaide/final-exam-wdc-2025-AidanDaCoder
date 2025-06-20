@@ -210,6 +210,7 @@ app.get('/logout', (req, res) => {
     });
 });
 
+// call initialise and then start listening since app.js is now the main entry point
 initialiseDatabaseAndPool().then(() => {
     app.listen(PORT, () => {
         console.log(`Server for Part 2 running on http://localhost:${PORT}`);
