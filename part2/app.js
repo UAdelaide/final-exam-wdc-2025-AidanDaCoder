@@ -6,8 +6,9 @@ require('dotenv').config();
 var cookieParser = require('cookie-parser');
 //added log for HTTP requests to the console
 var logger = require('morgan');
-//
+//added ability to connect to MYSQL using promises
 var mysql = require('mysql2/promise');
+//
 var fs = require('fs/promises');
 var session = require('express-session');
 
